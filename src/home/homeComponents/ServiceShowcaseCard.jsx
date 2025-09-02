@@ -298,6 +298,7 @@ export default function ServiceCard({ data }) {
                 
                 }}
                 >
+                  {/* //updated */}
                   {ctaText}
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
                 </ModernButton>
