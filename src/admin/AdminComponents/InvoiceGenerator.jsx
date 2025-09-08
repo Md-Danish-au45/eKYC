@@ -150,7 +150,7 @@ const generateInvoiceHtmlContent = (data) => {
                   </div>
               </div>
               <div class="footer">
-                  <p>Thank you for your business! For any queries, please contact support@ekycsolutions.com.</p>
+                  <p>Thank you for your business! For any queries, please contact support@verifyekyc.com.</p>
                   <p>This is a computer-generated invoice and does not require a physical signature.</p>
               </div>
           </div>

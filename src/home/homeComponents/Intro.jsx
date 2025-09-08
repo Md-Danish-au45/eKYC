@@ -108,7 +108,7 @@ export default function CompanyIntro() {
                 }`}
                 style={{ transitionDelay: '300ms' }}
               >
-                Verify My Kyc
+                Verify E Kyc
               
               </h2>
             </div>
@@ -121,11 +121,11 @@ export default function CompanyIntro() {
               style={{ transitionDelay: '400ms' }}
             >
               <p className="text-lg text-gray-600 leading-relaxed">
-              At VerifyMyKyc, we help businesses verify identities, documents, and company details with speed, accuracy, and complete peace of mind. Whether you're onboarding new users or validating important business documents, we make the process smooth, secure, and stress free.
+              At Verify E-Kyc, we help businesses verify identities, documents, and company details with speed, accuracy, and complete peace of mind. Whether you're onboarding new users or validating important business documents, we make the process smooth, secure, and stress free.
               </p>
 
               <p className="text-lg text-gray-600 leading-relaxed">
-                <span className="font-semibold text-gray-900">Verify My Kyc</span> is a Indian verification firm headquartered in New Delhi, India. It was founded in 2025 with a single mission of delivering high quality identity verification services for clients looking to secure their business operations. Its dedicated team of over 20+ professionals cater to a complete range of KYC & AML services for its clients spread across India. The platform currently serves 10,000+ users with a 99.9% accuracy rate.
+                <span className="font-semibold text-gray-900">Verify E Kyc</span> is a Indian verification firm headquartered in New Delhi, India. It was founded in 2025 with a single mission of delivering high quality identity verification services for clients looking to secure their business operations. Its dedicated team of over 20+ professionals cater to a complete range of KYC & AML services for its clients spread across India. The platform currently serves 10,000+ users with a 99.9% accuracy rate.
               </p>
             </div>
 

@@ -152,7 +152,7 @@ const generatePDF = (result) => {
           ">
             <img style="height:80px;width:240px;margin-left:-8px" src="${VerifyMyKyc}" alt="Company Logo"/>
             <div class="company-info" style="text-align: right; font-size: 16px; color: #555;">
-              <h3 style="margin: 0 0 0px 0; color: #111; font-size: 24px; font-weight: 700;">Navigant Digital Pvt. Ltd.</h3>
+              <h3 style="margin: 0 0 0px 0; color: #111; font-size: 24px; font-weight: 700;">Bringmark Pvt. Ltd.</h3>
               <p style="margin: 0; line-height: 1.7;">A-24/5, Mohan Cooperative Industrial Area,<br>Badarpur, Second Floor,<br>New Delhi 110044</p>
             </div>
           </div>
@@ -227,7 +227,7 @@ const generatePDF = (result) => {
           
           <div class="disclaimer-content" style="font-size: 14px; color: #718096; line-height: 1.8;">
             <p style="margin-bottom: 18px; text-align: justify;">
-              All rights reserved. The report and its contents are the property of VerifyMyKyc (operated by Navigant Digital Pvt. Ltd.) and may not be reproduced in any manner without the express written permission of VerifyMyKyc.
+              All rights reserved. The report and its contents are the property of VerifyMyKyc (operated by Bringmark  Pvt. Ltd.) and may not be reproduced in any manner without the express written permission of VerifyMyKyc.
             </p>
             <p style="margin-bottom: 18px; text-align: justify;">
               The reports and information contained herein are confidential and are meant only for the internal use of the VerifyMyKyc client for assessing the background of their applicant. The information and report are subject to change based on changes in factual information.

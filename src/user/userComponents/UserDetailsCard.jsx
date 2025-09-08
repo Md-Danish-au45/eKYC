@@ -7,11 +7,11 @@ import { useGetServicesQuery } from "@/app/api/serviceApiSlice";
 import { apiSlice } from "@/app/api/apiSlice";
 import { useDispatch } from "react-redux";
 // import { useGetProfileQuery } from "@/app/api/authApiSlice";
-import favicon from "@/assets/favicon.png"
+import favicon from "@/assets/logo.png"
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
-import VerifyMyKyc from "@/assets/VerifyMyKyc.svg"
+import VerifyMyKyc from "@/assets/logo.png"
 
 // Helper function to format keys into titles
 const toTitleCase = (str) => {
@@ -235,6 +235,7 @@ const generatePDF = (result, serviceName = 'Verification') => {
   }
 
   // Method 1: Enhanced jsPDF HTML method with proper sizing
+
   // const generateWithJsPDFHTML = () => {
   //   const reportElement = document.createElement('div');
 
@@ -475,24 +476,54 @@ const generatePDF = (result, serviceName = 'Verification') => {
           background: #fff; 
           width: 800px;
           max-width: 800px;
-          line-height: 1.6;
+          // line-height: 1.6;
           box-sizing: border-box;
           height: 1000px;
         ">
-          <div class="header" style="
-            display: flex; 
-            justify-content: space-between; 
-            align-items: flex-start; 
-            padding-bottom: 8px; 
-            border-bottom: 3px solid #e5e7eb; 
-            margin-bottom: 0px;
-          ">
-            <img style="height:80px;width:240px;margin-left:-8px" src="${typeof VerifyMyKyc !== 'undefined' ? VerifyMyKyc : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQwIiBoZWlnaHQ9IjcwIiB2aWV3Qm94PSIwIDAgMTQwIDcwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxNDAiIGhlaWdodD0iNzAiIGZpbGw9IiMxOTg3QkYiLz48dGV4dCB4PSI3MCIgeT0iNDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIiBmb250LXNpemU9IjE2IiBmb250LWZhbWlseT0iQXJpYWwiPkxPR088L3RleHQ+PC9zdmc+'}" alt="Company Logo"/>
-            <div class="company-info" style="text-align: right; font-size: 16px; color: #555;">
-              <h3 style="margin: 0 0 0px 0; color: #111; font-size: 24px; font-weight: 700;">Navigant Digital Pvt. Ltd.</h3>
-              <p style="margin: 0; line-height: 1.7;">A-24/5, Mohan Cooperative Industrial Area,<br>Badarpur, Second Floor,<br>New Delhi 110044</p>
-            </div>
-          </div>
+        <div class="header" style="
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  // padding-bottom: 8px; 
+  border-bottom: 3px solid #e5e7eb; 
+  margin-bottom: 0px;
+">
+
+  <!-- Logo -->
+  <img 
+    style="height:180px;width:180px;margin-left:-8px" 
+    src="${typeof VerifyMyKyc !== 'undefined' ? VerifyMyKyc : 'data:image/svg+xml;base64,...'}" 
+    alt="Company Logo"
+  />
+
+  <!-- Title + Slogan -->
+  <div style="margin-left: 20px; display: flex; flex-direction: column; align-items: flex-start;">
+    <!-- Title -->
+    <h1 style="margin: 0; font-size: 30px; font-weight: 700;">
+      <span style="color: #2E8B57; font-family: 'Georgia', serif;">Verify</span>
+      <span style="color: #1E3A8A; font-family: 'Georgia', serif;"> E-</span>
+      <span style="color: #FF6600; font-family: 'Georgia', serif;">KYC</span>
+    </h1>
+
+    <!-- Slogan -->
+    <p style="margin: 6px 0 0; font-size: 20px; font-weight: 600;">
+      <span style="color: #2E8B57;">Trusted Verification</span>
+      <span style="color: #1E3A8A;"> For A </span>
+      <span style="color: #FF6600;">Digital World</span>
+    </p>
+  </div>
+
+  <!-- Company Info (Right Side) -->
+  <div style="text-align: right; font-size: 16px; color: #555;">
+    <h3 style="margin: 0 0 4px 0; color: #111; font-size: 24px; font-weight: 700;">
+      Bringmark Pvt. Ltd.
+    </h3>
+    <p style="margin: 0; line-height: 1.7;">
+      Dwarka sector 19B,<br>New Delhi 110044
+    </p>
+  </div>
+</div>
+
 
           <div class="title-section" style="padding: 0px 0; text-align: center; margin-bottom: 2px;">
             <h1 style="font-size: 32px; color: #1a202c; margin: 0 0 0px 0; font-weight: 700;">${serviceName}</h1>
@@ -540,7 +571,7 @@ const generatePDF = (result, serviceName = 'Verification') => {
     // Create Second Page (Legal Disclaimer)
     const createSecondPage = () => {
       const secondPageElement = document.createElement('div');
-      secondPageElement.innerHTML = `
+ secondPageElement.innerHTML = `
         <div class="report-container" style="
           font-family: 'Roboto', Arial, sans-serif; 
           font-size: 18px; 
@@ -560,19 +591,19 @@ const generatePDF = (result, serviceName = 'Verification') => {
           
           <div class="disclaimer-content" style="font-size: 14px; color: #718096; line-height: 1.8;">
             <p style="margin-bottom: 18px; text-align: justify;">
-              All rights reserved. The report and its contents are the property of VerifyMyKyc (operated by Navigant Digital Pvt. Ltd.) and may not be reproduced in any manner without the express written permission of VerifyMyKyc.
+              All rights reserved. The report and its contents are the property of Verify E-KYC (operated by Bringmark Pvt. Ltd.) and may not be reproduced in any manner without the express written permission of Verify E-KYC.
             </p>
             <p style="margin-bottom: 18px; text-align: justify;">
-              The reports and information contained herein are confidential and are meant only for the internal use of the VerifyMyKyc client for assessing the background of their applicant. The information and report are subject to change based on changes in factual information.
+              The reports and information contained herein are confidential and are meant only for the internal use of the Verify E-KYC client for assessing the background of their applicant. The information and report are subject to change based on changes in factual information.
             </p>
             <p style="margin-bottom: 18px; text-align: justify;">
-              Information and reports, including text, graphics, links, or other items, are provided on an "as is," "as available" basis. VerifyMyKyc expressly disclaims liability for errors or omissions in the report, information, and materials, as the information is obtained from various sources as per industry practice. No warranty of any kind implied, express, or statutory including but not limited to the warranties of non-infringement of third party rights, title, merchantability, fitness for a particular purpose or freedom from computer virus, is given with respect to the contents of this report.
+              Information and reports, including text, graphics, links, or other items, are provided on an "as is," "as available" basis. Verify E-KYC expressly disclaims liability for errors or omissions in the report, information, and materials, as the information is obtained from various sources as per industry practice. No warranty of any kind implied, express, or statutory including but not limited to the warranties of non-infringement of third party rights, title, merchantability, fitness for a particular purpose or freedom from computer virus, is given with respect to the contents of this report.
             </p>
             <p style="margin-bottom: 18px; text-align: justify;">
               Our findings are based on the information available to us and industry practice; therefore, we cannot guarantee the accuracy of the information collected. Should additional information or documentation become available that impacts our conclusions, we reserve the right to amend our findings accordingly.
             </p>
             <p style="margin-bottom: 18px; text-align: justify;">
-              These reports are not intended for publication or circulation. They should not be shared with any person, entity, association, corporation, or any other purposes, in whole or in part, without prior written consent from VerifyMyKyc in each specific instance. Our reports cannot be used by clients to claim all responsibility or liability that may arise due to omissions, additions, correction, and accuracy. All the information has been obtained from various sources as per industry practice to make an informed decision, and we hereby disclaim all responsibility or liability that may arise due to errors in the report.
+              These reports are not intended for publication or circulation. They should not be shared with any person, entity, association, corporation, or any other purposes, in whole or in part, without prior written consent from Verify E-KYC in each specific instance. Our reports cannot be used by clients to claim all responsibility or liability that may arise due to omissions, additions, correction, and accuracy. All the information has been obtained from various sources as per industry practice to make an informed decision, and we hereby disclaim all responsibility or liability that may arise due to errors in the report.
             </p>
             <p style="margin-bottom: 30px; text-align: justify;">
               Due to the limitations mentioned above, the result of our work with respect to background checks should be considered only as a guideline. Our reports and comments should not be considered a definitive pronouncement on the individual.
@@ -589,10 +620,11 @@ const generatePDF = (result, serviceName = 'Verification') => {
             padding: 25px 0;
             border-top: 1px solid #e5e7eb;
           ">
-            - VerifyMyKyc CONFIDENTIAL -
+            - Verify E-KYC CONFIDENTIAL -
           </div>
         </div>
       `;
+
       return secondPageElement;
     };
 
@@ -612,8 +644,9 @@ const generatePDF = (result, serviceName = 'Verification') => {
         
         const firstPageCanvas = await html2canvas(firstPageElement.querySelector('.report-container'), {
           scale: 2,
-          useCORS: true,
-          allowTaint: false,
+          useCORS: true,       // Allow cross-origin images
+          logging: true,   
+          allowTaint: true,
           backgroundColor: '#ffffff',
           width: 800,
           height: 1000,
@@ -881,13 +914,13 @@ export function UserDetailsCard({
 
   return (
     <CustomCard className="border-green-200 bg-green-50">
-      <div className="bg-gradient-to-r from-blue-500 to-emerald-600 text-white px-6 py-4">
+      <div className="bg-gradient-to-r from-white-500 to-white-600 text-black px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img className="w-12 h-12 " src={favicon} alt="" />
+          <div className="flex items-center gap-3 ">
+            <img className="w-32 h-32 " src={favicon} alt="" />
             <div>
               <h3 className="text-lg font-bold">Verified Successfully</h3>
-              <p className="text-green-100 text-sm">{serviceType}</p>
+              <p className="text-black text-sm">{serviceType}</p>
             </div>
           </div>
         </div>
@@ -964,7 +997,7 @@ export function UserDetailsCard({
             <CustomButton
               onClick={handleDownloadPDF}
               disabled={isDownloading}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-gray-900 hover:bg-gray-700"
             >
               {isDownloading ? (
                 <>

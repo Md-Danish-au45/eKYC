@@ -37,9 +37,12 @@ export default function BlogPage() {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
 
+  // Fetch blog data by slug
   const { data: blogResponse, isLoading, error } = useGetBlogBySlugQuery(slug);
+
+  // Fetch related blogs, skipping until the main blog data is available
   const { data: relatedResponse } = useGetRelatedBlogsQuery(slug, {
-      skip: !blogResponse?.data, // Skip fetching related blogs until the main blog is loaded
+    skip: !blogResponse?.data,
   });
 
   const blog = blogResponse?.data;
@@ -68,7 +71,7 @@ export default function BlogPage() {
   const handleShare = (platform) => {
     const url = window.location.href;
     const title = blog?.title;
-    
+
     const shareUrls = {
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
       twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
@@ -99,12 +102,12 @@ export default function BlogPage() {
       <div className="min-h-screen flex flex-col items-center justify-center bg-white">
         <Header />
         <div className="text-center flex-grow flex flex-col justify-center">
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Blog post not found</h1>
-            <p className="text-gray-600">The article you're looking for doesn't exist or has been moved.</p>
-            <Button className="mt-4" onClick={() => navigate('/blog')}>
-                <ArrowLeft className="w-4 h-4 mr-2"/>
-                Back to Blog
-            </Button>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Blog post not found</h1>
+          <p className="text-gray-600">The article you're looking for doesn't exist or has been moved.</p>
+          <Button className="mt-4" onClick={() => navigate('/blog')}>
+            <ArrowLeft className="w-4 h-4 mr-2"/>
+            Back to Blog
+          </Button>
         </div>
         <Footer />
       </div>
@@ -115,12 +118,14 @@ export default function BlogPage() {
     <div className="flex flex-col min-h-screen bg-white">
       <TopBar/>
       <Header />
-      
+
       <main className="flex-1">
         {/* Breadcrumb */}
-        <div className="bg-gray-50 py-4">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-gray-50 py-4 border-b border-gray-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav className="flex items-center space-x-2 text-sm text-gray-600">
+              <Link to="/" className="hover:text-[#1987BF] transition-colors">Home</Link>
+              <ChevronRight className="w-4 h-4" />
               <Link to="/blog" className="hover:text-[#1987BF] transition-colors">Blog</Link>
               <ChevronRight className="w-4 h-4" />
               <span className="text-gray-900 truncate">{blog.title}</span>
@@ -129,150 +134,235 @@ export default function BlogPage() {
         </div>
 
         {/* Hero Section */}
-        <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white py-16">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
+              className="text-center"
             >
-              <Badge className="bg-[#1987BF] text-white mb-6 text-sm font-medium">
+              <Badge className="bg-[#1987BF] text-white mb-6 text-sm font-medium px-3 py-1">
                 {blog.category}
               </Badge>
 
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-gray-900 max-w-3xl mx-auto">
                 {blog.title}
               </h1>
 
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-4 text-slate-300 mb-8">
-                <div className="flex items-center gap-2"><User className="w-5 h-5" /><span>{blog.author}</span></div>
-                {/* <div className="flex items-center gap-2"><Calendar className="w-5 h-5" /><span>{new Date(blog.publishedAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span></div> */}
-                {/* <div className="flex items-center gap-2"><Clock className="w-5 h-5" /><span>{blog.readingTime} min read</span></div> */}
+              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4 text-gray-600 mb-8">
+                <div className="flex items-center gap-2">
+                  <User className="w-5 h-5" />
+                  <span className="font-medium">{blog.author}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-5 h-5" />
+                  <span>{new Date(blog.publishedAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="w-5 h-5" />
+                  <span>{blog.readingTime || '5'} min read</span>
+                </div>
               </div>
 
               {blog.tags && blog.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-8">
+                <div className="flex flex-wrap gap-2 mb-8 justify-center">
                   {blog.tags.map((tag, index) => (
-                    <Badge key={index} variant="outline" className="text-slate-300 border-slate-600">
+                    <Badge key={index} variant="outline" className="text-gray-600 border-gray-300 bg-white">
+                      <Tag className="w-3 h-3 mr-1" />
                       {tag}
                     </Badge>
                   ))}
                 </div>
               )}
 
-              <div className="flex items-center gap-4">
-                <Button onClick={() => navigate(-1)} variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-800">
+              <div className="flex items-center justify-center gap-4">
+                <Button 
+                  onClick={() => navigate(-1)} 
+                  variant="outline" 
+                  className="border-gray-300 text-gray-700 hover:bg-gray-50"
+                >
                   <ArrowLeft className="w-4 h-4 mr-2" /> Back
                 </Button>
-                
-                {/* <div className="relative">
-                  <Button onClick={() => setShowShareMenu(!showShareMenu)} variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-800">
+
+                <div className="relative">
+                  <Button 
+                    onClick={() => setShowShareMenu(!showShareMenu)} 
+                    variant="outline" 
+                    className="border-gray-300 text-gray-700 hover:bg-gray-50"
+                  >
                     <Share2 className="w-4 h-4 mr-2" /> Share
-                  </Button> */}
-                  
-                  {/* {showShareMenu && (
+                  </Button>
+
+                  {showShareMenu && (
                     <div className="absolute top-full left-0 mt-2 bg-white rounded-lg shadow-xl border p-2 z-10 w-40">
-                      <Button onClick={() => handleShare('facebook')} variant="ghost" size="sm" className="w-full justify-start text-gray-700 hover:bg-blue-50"><Facebook className="w-4 h-4 mr-2 text-blue-600" />Facebook</Button>
-                      <Button onClick={() => handleShare('twitter')} variant="ghost" size="sm" className="w-full justify-start text-gray-700 hover:bg-blue-50"><Twitter className="w-4 h-4 mr-2 text-blue-400" />Twitter</Button>
-                      <Button onClick={() => handleShare('linkedin')} variant="ghost" size="sm" className="w-full justify-start text-gray-700 hover:bg-blue-50"><Linkedin className="w-4 h-4 mr-2 text-blue-700" />LinkedIn</Button>
-                      <Button onClick={() => handleShare('copy')} variant="ghost" size="sm" className="w-full justify-start text-gray-700 hover:bg-gray-50"><LinkIcon className="w-4 h-4 mr-2 text-gray-600" />Copy Link</Button>
+                      <Button onClick={() => handleShare('facebook')} variant="ghost" size="sm" className="w-full justify-start text-gray-700 hover:bg-blue-50">
+                        <Facebook className="w-4 h-4 mr-2 text-blue-600" />Facebook
+                      </Button>
+                      <Button onClick={() => handleShare('twitter')} variant="ghost" size="sm" className="w-full justify-start text-gray-700 hover:bg-blue-50">
+                        <Twitter className="w-4 h-4 mr-2 text-blue-400" />Twitter
+                      </Button>
+                      <Button onClick={() => handleShare('linkedin')} variant="ghost" size="sm" className="w-full justify-start text-gray-700 hover:bg-blue-50">
+                        <Linkedin className="w-4 h-4 mr-2 text-blue-700" />LinkedIn
+                      </Button>
+                      <Button onClick={() => handleShare('copy')} variant="ghost" size="sm" className="w-full justify-start text-gray-700 hover:bg-gray-50">
+                        <LinkIcon className="w-4 h-4 mr-2 text-gray-600" />Copy Link
+                      </Button>
                     </div>
                   )}
-                </div> */}
+                </div>
 
-                {/* <Button onClick={() => setIsBookmarked(!isBookmarked)} variant="outline" className={`border-slate-600 ${isBookmarked ? 'bg-[#1987BF] text-white border-[#1987BF]' : 'text-slate-300 hover:bg-slate-800'}`}>
-                  <Bookmark className={`w-4 h-4 mr-2 ${isBookmarked ? 'fill-current' : ''}`} /> {isBookmarked ? 'Saved' : 'Save'}
-                </Button> */}
+                <Button 
+                  onClick={() => setIsBookmarked(!isBookmarked)} 
+                  variant="outline" 
+                  className={`border-gray-300 ${isBookmarked ? 'bg-[#1987BF] text-white border-[#1987BF]' : 'text-gray-700 hover:bg-gray-50'}`}
+                >
+                  <Bookmark className={`w-4 h-4 mr-2 ${isBookmarked ? 'fill-current' : ''}`} /> 
+                  {isBookmarked ? 'Saved' : 'Save'}
+                </Button>
               </div>
             </motion.div>
           </div>
         </div>
 
         {blog.featuredImage?.url && (
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
             <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative z-10"
+            >
+              <img 
+                src={blog.featuredImage.url} 
+                alt={blog.title} 
+                className="w-full h-auto max-h-[500px] object-cover rounded-xl shadow-md" 
+              />
+            </motion.div>
+          </div>
+        )}
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex flex-col lg:flex-row gap-12">
+            {/* Main Content */}
+            <article className="w-full lg:w-2/3">
+              <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative z-10"
-            >
-                <img src={blog.featuredImage.url} alt={blog.title} className="w-full h-auto max-h-[500px] object-cover rounded-xl shadow-2xl" />
-            </motion.div>
-            </div>
-        )}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="overflow-hidden"
+              >
+                <div
+                  className="prose prose-lg prose-gray max-w-none overflow-hidden
+                  prose-headings:text-gray-900 prose-headings:font-bold
+                  prose-h1:text-3xl prose-h1:mb-6 prose-h1:mt-8
+                  prose-h2:text-2xl prose-h2:mb-4 prose-h2:mt-6
+                  prose-h3:text-xl prose-h3:mb-3 prose-h3:mt-5
+                  prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-4
+                  prose-a:text-[#1987BF] prose-a:no-underline hover:prose-a:underline
+                  prose-strong:text-gray-900 prose-strong:font-semibold
+                  prose-ul:my-4 prose-ol:my-4
+                  prose-li:text-gray-700 prose-li:mb-2
+                  prose-blockquote:border-l-4 prose-blockquote:border-[#1987BF]
+                  prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-600
+                  prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm
+                  prose-pre:bg-gray-900 prose-pre:text-white prose-pre:p-4 prose-pre:rounded-lg prose-pre:overflow-x-auto
+                  [&_*]:max-w-full [&_*]:box-border
+                  [&_img]:!max-w-full [&_img]:!w-full [&_img]:h-auto [&_img]:object-cover [&_img]:rounded-lg [&_img]:shadow-md [&_img]:my-4 [&_img]:block
+                  [&_figure]:!max-w-full [&_figure]:w-full [&_figure]:overflow-hidden
+                  [&_div]:!max-w-full [&_div]:overflow-hidden [&_div]:box-border
+                  [&_table]:!max-w-full [&_table]:overflow-x-auto [&_table]:block [&_table]:whitespace-nowrap
+                  sm:[&_img]:my-6 md:[&_img]:my-8"
+                  style={{...richTextStyles, maxWidth: '100%', overflowWrap: 'break-word', wordBreak: 'break-word'}}
+                  dangerouslySetInnerHTML={{ __html: blog.content }}
+                />
+              </motion.div>
+            </article>
 
-        <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="overflow-hidden"
-          >
-            <div 
-              className="prose prose-lg prose-gray max-w-none overflow-hidden
-                prose-headings:text-gray-900 prose-headings:font-bold
-                prose-h1:text-3xl prose-h1:mb-6 prose-h1:mt-8
-                prose-h2:text-2xl prose-h2:mb-4 prose-h2:mt-6
-                prose-h3:text-xl prose-h3:mb-3 prose-h3:mt-5
-                prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-4
-                prose-a:text-[#1987BF] prose-a:no-underline hover:prose-a:underline
-                prose-strong:text-gray-900 prose-strong:font-semibold
-                prose-ul:my-4 prose-ol:my-4
-                prose-li:text-gray-700 prose-li:mb-2
-                prose-blockquote:border-l-4 prose-blockquote:border-[#1987BF] 
-                prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-600
-                prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm
-                prose-pre:bg-gray-900 prose-pre:text-white prose-pre:p-4 prose-pre:rounded-lg prose-pre:overflow-x-auto
-                [&_*]:max-w-full [&_*]:box-border
-                [&_img]:!max-w-full [&_img]:!w-full [&_img]:h-auto [&_img]:object-cover [&_img]:rounded-lg [&_img]:shadow-md [&_img]:my-4 [&_img]:block
-                [&_figure]:!max-w-full [&_figure]:w-full [&_figure]:overflow-hidden
-                [&_div]:!max-w-full [&_div]:overflow-hidden [&_div]:box-border
-                [&_table]:!max-w-full [&_table]:overflow-x-auto [&_table]:block [&_table]:whitespace-nowrap
-                sm:[&_img]:my-6 md:[&_img]:my-8"
-              style={{...richTextStyles, maxWidth: '100%', overflowWrap: 'break-word', wordBreak: 'break-word'}}
-              dangerouslySetInnerHTML={{ __html: blog.content }} 
-            />
-          </motion.div>
-        </article>
+            {/* Sidebar */}
+            <aside className="w-full lg:w-1/3">
+              <div className="sticky top-24 space-y-8">
+                {/* Recent Posts */}
+                {relatedBlogs.length > 0 && (
+                  <Card className="border-gray-200 shadow-sm">
+                    <CardContent className="p-6">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+                        Related Posts
+                      </h3>
+                      <div className="space-y-4">
+                        {relatedBlogs.map((relatedBlog) => (
+                          <Link 
+                            key={relatedBlog._id} 
+                            to={`/blog/${relatedBlog.slug}`}
+                            className="block group"
+                          >
+                            <div className="flex items-start space-x-3 py-2">
+                              <div className="flex-shrink-0 w-16 h-16 rounded-md overflow-hidden">
+                                <img 
+                                  src={relatedBlog.featuredImage?.url || 'https://placehold.co/100x100/e2e8f0/e2e8f0'} 
+                                  alt={relatedBlog.title}
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                                />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <h4 className="text-sm font-medium text-gray-900 group-hover:text-[#1987BF] transition-colors line-clamp-2">
+                                  {relatedBlog.title}
+                                </h4>
+                                <p className="text-xs text-gray-500 mt-1">
+                                  {new Date(relatedBlog.publishedAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                                </p>
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
 
-        {relatedBlogs.length > 0 && (
-          <section className="bg-gray-50 py-16">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-                Related Articles
-              </h2>
-              
-              <div className="grid md:grid-cols-2 gap-8">
-                {relatedBlogs.map((relatedBlog, index) => (
-                  <motion.div
-                    key={relatedBlog._id}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 * index }}
-                  >
-                    <Link to={`/blog/${relatedBlog.slug}`} className="block group">
-                      <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1 h-full">
-                        <div className="relative overflow-hidden">
-                          <img src={relatedBlog.featuredImage?.url || 'https://placehold.co/800x400/e2e8f0/e2e8f0'} alt={relatedBlog.title} className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105" />
-                          <div className="absolute top-4 left-4"><Badge className="bg-black/50 text-white border-0">{relatedBlog.category}</Badge></div>
-                          <div className="absolute top-4 right-4"><Badge className="bg-black/50 text-white border-0"><Clock className="w-3 h-3 mr-1" />{relatedBlog.readingTime} min</Badge></div>
-                        </div>
-                        <CardContent className="p-6">
-                          <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#1987BF] transition-colors line-clamp-2">
-                            {relatedBlog.title}
-                          </h3>
-                          <p className="text-gray-600 leading-relaxed line-clamp-3">
-                            {relatedBlog.excerpt}
-                          </p>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  </motion.div>
-                ))}
+                {/* Popular Tags from the current blog */}
+                {blog.tags && blog.tags.length > 0 && (
+                  <Card className="border-gray-200 shadow-sm">
+                    <CardContent className="p-6">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+                        Popular Tags
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {blog.tags.map((tag, index) => (
+                          <Badge key={index} variant="outline" className="text-gray-600 border-gray-300 bg-white text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Newsletter */}
+                <Card className="border-gray-200 shadow-sm bg-gradient-to-br from-blue-50 to-indigo-50 border-0">
+                  <CardContent className="p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                      Subscribe to our newsletter
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Get the latest articles and resources sent straight to your inbox.
+                    </p>
+                    <div className="space-y-3">
+                      <input 
+                        type="email" 
+                        placeholder="Your email address" 
+                        className="w-full px-4 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-[#1987BF] focus:border-transparent"
+                      />
+                      <Button className="w-full bg-[#1987BF] hover:bg-[#1474a4]">
+                        Subscribe
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
-            </div>
-          </section>
-        )}
+            </aside>
+          </div>
+        </div>
       </main>
 
       <Footer />

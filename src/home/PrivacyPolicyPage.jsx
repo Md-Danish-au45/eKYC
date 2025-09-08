@@ -1,24 +1,17 @@
-"use client"
-
-import  React, { useEffect } from "react"
-
-import { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { ChevronDown, ChevronRight, Shield, FileText, Users, Lock, Eye, Globe, Mail, MapPin } from "lucide-react"
+import { ChevronDown, ChevronRight, Shield, FileText, Users, Lock, Eye, Globe, Mail, MapPin, Phone, Building2 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
-import LandingPageFooter from "./homeComponents/Footer"
-import HomePageHeader from "./homeComponents/Header"
-import { useNavigate } from "react-router-dom"
 import TopBar from "./homeComponents/TopBar"
+import Header from "./homeComponents/Header"
+import Footer from "./homeComponents/Footer"
 
-export default function PrivacyPolicy() {
-  // FIX: Removed the TypeScript type annotation <string>
+export default function ProfessionalPrivacyPolicy() {
   const [expandedSection, setExpandedSection] = useState("overview")
 
   const toggleSection = (sectionId) => {
     setExpandedSection(expandedSection === sectionId ? "" : sectionId)
   }
-  const navigate = useNavigate()
 
   const sections = [
     {
@@ -33,8 +26,13 @@ export default function PrivacyPolicy() {
           </p>
           <p className="text-gray-700 leading-relaxed">
             We use Your Personal data to provide and improve the Service. By using the Service, You agree to the
-            collection and use of information in accordance with this Privacy Policy.
+            collection and use of information in accordance with this Privacy Policy. This policy applies to all users of our KYC verification platform.
           </p>
+          <div className="bg-gray-50 border-l-4 border-gray-500 p-4 rounded-r-lg">
+            <p className="text-gray-800 font-medium">
+              Your trust is fundamental to our business. We are committed to protecting your personal information with the highest standards of security and transparency.
+            </p>
+          </div>
         </div>
       ),
     },
@@ -56,70 +54,46 @@ export default function PrivacyPolicy() {
           <div>
             <h4 className="text-lg font-semibold text-gray-900 mb-4">Definitions</h4>
             <p className="text-gray-700 mb-4">For the purposes of this Privacy Policy:</p>
-            <div className="space-y-3">
+            <div className="grid gap-4 md:grid-cols-2">
               {[
                 {
                   term: "Account",
                   definition: "means a unique account created for You to access our Service or parts of our Service.",
                 },
                 {
-                  term: "Affiliate",
-                  definition:
-                    'means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.',
-                },
-                {
                   term: "Company",
                   definition:
-                    '(referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Navigant Digital Pvt. Ltd., Tower A, 4th Floor Sector 62, Noida Uttar Pradesh - 201309 India.',
+                    '(referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Bringmark Pvt. Ltd., operating Verify E-KYC services.',
                 },
                 {
-                  term: "Cookies",
-                  definition:
-                    "are small files that are placed on Your computer, mobile device or any other device by a website, containing the details of Your browsing history on that website among its many uses.",
+                  term: "Service",
+                  definition: "refers to the Verify E-KYC website and platform.",
                 },
                 {
-                  term: "Country",
-                  definition: "refers to: Uttar Pradesh, India",
+                  term: "Personal Data",
+                  definition: "is any information that relates to an identified or identifiable individual, including KYC documents.",
+                },
+                {
+                  term: "KYC Data",
+                  definition: "refers to identity verification documents and information collected for compliance purposes.",
                 },
                 {
                   term: "Device",
                   definition:
-                    "means any device that can access the Service such as a computer, a cellphone or a digital tablet.",
-                },
-                {
-                  term: "Personal Data",
-                  definition: "is any information that relates to an identified or identifiable individual.",
-                },
-                {
-                  term: "Service",
-                  definition: "refers to the Website.",
-                },
-                {
-                  term: "Service Provider",
-                  definition:
-                    "means any natural or legal person who processes the data on behalf of the Company. It refers to third-party companies or individuals employed by the Company to facilitate the Service, to provide the Service on behalf of the Company, to perform services related to the Service or to assist the Company in analyzing how the Service is used.",
-                },
-                {
-                  term: "Third-party Social Media Service",
-                  definition:
-                    "refers to any website or any social network website through which a User can log in or create an account to use the Service.",
+                    "means any device that can access the Service such as a computer, mobile phone or digital tablet.",
                 },
                 {
                   term: "Usage Data",
                   definition:
-                    "refers to data collected automatically, either generated by the use of the Service or from the Service infrastructure itself (for example, the duration of a page visit).",
+                    "refers to data collected automatically during use of our KYC verification services.",
                 },
                 {
-                  term: "Website",
-                  definition: "refers to VerifyMyKYC, accessible from https://verifymykyc.com/",
-                },
-                {
-                  term: "You",
+                  term: "You/User",
                   definition:
-                    "means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.",
+                    "means the individual or entity accessing our KYC verification services.",
                 },
               ].map((item, index) => (
-                <div key={index} className="bg-gray-50 p-4 rounded-lg">
+                <div key={index} className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                   <span className="font-semibold text-gray-900">{item.term}:</span>{" "}
                   <span className="text-gray-700">{item.definition}</span>
                 </div>
@@ -131,455 +105,285 @@ export default function PrivacyPolicy() {
     },
     {
       id: "data-collection",
-      title: "Collecting and Using Your Personal Data",
+      title: "Data Collection & Processing",
       icon: <Users className="w-5 h-5" />,
       content: (
         <div className="space-y-6">
-          <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-3">Types of Data Collected</h4>
-
-            <div className="mb-6">
-              <h5 className="text-md font-semibold text-gray-800 mb-3">Personal Data</h5>
-              <p className="text-gray-700 mb-4">
-                While using Our Service, We may ask You to provide Us with certain personally identifiable information
-                that can be used to contact or identify You. Personally identifiable information may include, but is not
-                limited to:
-              </p>
-              <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                <li>Email address</li>
-                <li>First name and last name</li>
-                <li>Phone number</li>
-                <li>Address, State, Province, ZIP/Postal code, City</li>
-                <li>Usage Data</li>
-              </ul>
-            </div>
-
-            <div className="mb-6">
-              <h5 className="text-md font-semibold text-gray-800 mb-3">Usage Data</h5>
-              <p className="text-gray-700 mb-4">Usage Data is collected automatically when using the Service.</p>
-              <p className="text-gray-700 mb-4">
-                Usage Data may include information such as Your Device's Internet Protocol address (e.g. IP address),
-                browser type, browser version, the pages of our Service that You visit, the time and date of Your visit,
-                the time spent on those pages, unique device identifiers and other diagnostic data.
-              </p>
-              <p className="text-gray-700 mb-4">
-                When You access the Service by or through a mobile device, We may collect certain information
-                automatically, including, but not to, the type of mobile device You use, Your mobile device
-                unique ID, the IP address of Your mobile device, Your mobile operating system, the type of mobile
-                Internet browser You use, unique device identifiers and other diagnostic data.
-              </p>
-              <p className="text-gray-700">
-                We may also collect information that Your browser sends whenever You visit our Service or when You
-                access the Service by or through a mobile device.
-              </p>
-            </div>
-
-            <div>
-              <h5 className="text-md font-semibold text-gray-800 mb-3">
-                Information from Third-Party Social Media Services
-              </h5>
-              <p className="text-gray-700 mb-4">
-                The Company allows You to create an account and log in to use the Service through the following
-                Third-party Social Media Services:
-              </p>
-              <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4 mb-4">
-                <li>Google</li>
-                <li>Facebook</li>
-                <li>Instagram</li>
-                <li>Twitter</li>
-                <li>LinkedIn</li>
-              </ul>
-              <p className="text-gray-700 mb-4">
-                If You decide to register through or otherwise grant us access to a Third-Party Social Media Service, We
-                may collect Personal data that is already associated with Your Third-Party Social Media Service's
-                account, such as Your name, Your email address, Your activities or Your contact list associated with
-                that account.
-              </p>
-              <p className="text-gray-700">
-                You may also have the option of sharing additional information with the Company through Your Third-Party
-                Social Media Service's account. If You choose to provide such information and Personal Data, during
-                registration or otherwise, You are giving the Company permission to use, share, and store it in a manner
-                consistent with this Privacy Policy.
-              </p>
-            </div>
+          <div className="bg-amber-50 border border-amber-200 p-4 rounded-lg">
+            <h4 className="text-amber-800 font-semibold mb-2">Important Notice</h4>
+            <p className="text-amber-700">As a KYC verification service, we process sensitive personal and financial information. All data collection is performed in compliance with applicable data protection regulations.</p>
           </div>
-        </div>
-      ),
-    },
-    {
-      id: "cookies",
-      title: "Tracking Technologies and Cookies",
-      icon: <Eye className="w-5 h-5" />,
-      content: (
-        <div className="space-y-6">
-          <p className="text-gray-700 leading-relaxed">
-            We use Cookies and similar tracking technologies to track the activity on Our Service and store certain
-            information. Tracking technologies used are beacons, tags, and scripts to collect and track information and
-            to improve and analyze Our Service. The technologies We use may include:
-          </p>
-
-          <div className="space-y-4">
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h5 className="font-semibold text-gray-800 mb-2">Cookies or Browser Cookies</h5>
-              <p className="text-gray-700">
-                A cookie is a small file placed on Your Device. You can instruct Your browser to refuse all Cookies or
-                to indicate when a Cookie is being sent. However, if You do not accept Cookies, You may not be able to
-                use some parts of our Service. Unless you have adjusted Your browser setting so that it will refuse
-                Cookies, our Service may use Cookies.
-              </p>
-            </div>
-
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h5 className="font-semibold text-gray-800 mb-2">Web Beacons</h5>
-              <p className="text-gray-700">
-                Certain sections of our Service and our emails may contain small electronic files known as web beacons
-                (also referred to as clear gifs, pixel tags, and single-pixel gifs) that permit the Company, for
-                example, to count users who have visited those pages or opened an email and for other related website
-                statistics (for example, recording the popularity of a certain section and verifying system and server
-                integrity).
-              </p>
-            </div>
-          </div>
-
-          <p className="text-gray-700">
-            Cookies can be "Persistent" or "Session" Cookies. Persistent Cookies remain on Your personal computer or
-            mobile device when You go offline, while Session Cookies are deleted as soon as You close Your web browser.
-          </p>
 
           <div>
-            <p className="text-gray-700 mb-4">
-              We use both Session and Persistent Cookies for the purposes set out below:
-            </p>
+            <h4 className="text-lg font-semibold text-gray-900 mb-3">Types of Data We Collect</h4>
 
-            <div className="space-y-4">
-              {[
-                {
-                  title: "Necessary / Essential Cookies",
-                  type: "Session Cookies",
-                  admin: "Us",
-                  purpose:
-                    "These Cookies are essential to provide You with services available through the Website and to enable You to use some of its features. They help to authenticate users and prevent fraudulent use of user accounts. Without these Cookies, the services that You have asked for cannot be provided, and We only use these Cookies to provide You with those services.",
-                },
-                {
-                  title: "Cookies Policy / Notice Acceptance Cookies",
-                  type: "Persistent Cookies",
-                  admin: "Us",
-                  purpose: "These Cookies identify if users have accepted the use of cookies on the Website.",
-                },
-                {
-                  title: "Functionality Cookies",
-                  type: "Persistent Cookies",
-                  admin: "Us",
-                  purpose:
-                    "These Cookies allow us to remember choices You make when You use the Website, such as remembering your login details or language preference. The purpose of these Cookies is to provide You with a more personal experience and to avoid You having to re-enter your preferences every time You use the Website.",
-                },
-              ].map((cookie, index) => (
-                <div key={index} className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
-                  <h6 className="font-semibold text-gray-800 mb-2">{cookie.title}</h6>
-                  <div className="text-sm text-gray-600 mb-2">
-                    <span className="font-medium">Type:</span> {cookie.type} |
-                    <span className="font-medium"> Administered by:</span> {cookie.admin}
-                  </div>
-                  <p className="text-gray-700 text-sm">{cookie.purpose}</p>
-                </div>
-              ))}
+            <div className="space-y-6">
+              <div className="border border-gray-200 rounded-lg p-5">
+                <h5 className="text-md font-semibold text-gray-800 mb-3 flex items-center">
+                  <Shield className="w-4 h-4 mr-2 text-gray-600" />
+                  KYC & Identity Verification Data
+                </h5>
+                <p className="text-gray-700 mb-3">
+                  For identity verification and compliance purposes, we may collect:
+                </p>
+                <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
+                  <li>Government-issued ID documents (Passport, Driver's License, National ID)</li>
+                  <li>Proof of address documents</li>
+                  <li>Biometric data (facial recognition, fingerprints where applicable)</li>
+                  <li>Financial documents for enhanced verification</li>
+                  <li>Digital signatures and verification timestamps</li>
+                </ul>
+              </div>
+
+              <div className="border border-gray-200 rounded-lg p-5">
+                <h5 className="text-md font-semibold text-gray-800 mb-3 flex items-center">
+                  <Users className="w-4 h-4 mr-2 text-green-600" />
+                  Personal Information
+                </h5>
+                <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
+                  <li>Full name and date of birth</li>
+                  <li>Email address and phone number</li>
+                  <li>Residential and business addresses</li>
+                  <li>Occupation and employer information</li>
+                  <li>Nationality and tax identification numbers</li>
+                </ul>
+              </div>
+
+              <div className="border border-gray-200 rounded-lg p-5">
+                <h5 className="text-md font-semibold text-gray-800 mb-3 flex items-center">
+                  <Eye className="w-4 h-4 mr-2 text-purple-600" />
+                  Technical & Usage Data
+                </h5>
+                <ul className="list-disc list-inside space-y-1 text-gray-700 ml-4">
+                  <li>IP addresses and device identifiers</li>
+                  <li>Browser type and operating system</li>
+                  <li>Session recordings for security purposes</li>
+                  <li>Verification attempt logs and timestamps</li>
+                  <li>Geolocation data for fraud prevention</li>
+                </ul>
+              </div>
             </div>
           </div>
-
-          <p className="text-gray-700 italic">
-            For more information about the cookies we use and your choices regarding cookies, please visit our Cookies
-            Policy or the Cookies section of our Privacy Policy.
-          </p>
         </div>
       ),
     },
     {
       id: "data-usage",
-      title: "Use of Your Personal Data",
+      title: "How We Use Your Data",
       icon: <Lock className="w-5 h-5" />,
       content: (
         <div className="space-y-6">
-          <p className="text-gray-700 mb-4">The Company may use Personal Data for the following purposes:</p>
+          <p className="text-gray-700 mb-4">We use your personal data for the following purposes:</p>
 
-          <div className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2">
             {[
               {
-                title: "To provide and maintain our Service",
-                description: "including to monitor the usage of our Service.",
+                title: "Identity Verification",
+                description: "To verify your identity and comply with KYC regulations and anti-money laundering requirements.",
+                icon: "🛡️"
               },
               {
-                title: "To manage Your Account",
-                description:
-                  "to manage Your registration as a user of the Service. The Personal Data You provide can give You access to different functionalities of the Service that are available to You as a registered user.",
+                title: "Service Delivery",
+                description: "To provide and maintain our KYC verification services and process your verification requests.",
+                icon: "⚡"
               },
               {
-                title: "For the performance of a contract",
-                description:
-                  "the development, compliance and undertaking of the purchase contract for the products, items or services You have purchased or of any other contract with Us through the Service.",
+                title: "Compliance & Legal",
+                description: "To meet regulatory requirements and assist law enforcement agencies when legally obligated.",
+                icon: "⚖️"
               },
               {
-                title: "To contact You",
-                description:
-                  "To contact You by email, telephone calls, SMS, or other equivalent forms of electronic communication, such as a mobile application's push notifications regarding updates or informative communications related to the functionalities, products or contracted services, including the security updates, when necessary or reasonable for their implementation.",
+                title: "Fraud Prevention",
+                description: "To detect and prevent fraudulent activities, identity theft, and other security threats.",
+                icon: "🔒"
               },
               {
-                title: "To provide You with news, special offers and general information",
-                description:
-                  "about other goods, services and events which we offer that are similar to those that you have already purchased or enquired about unless You have opted not to receive such information.",
+                title: "Customer Support",
+                description: "To respond to your inquiries, provide technical support, and resolve service issues.",
+                icon: "💬"
               },
               {
-                title: "To manage Your requests",
-                description: "To attend and manage Your requests to Us.",
-              },
-              {
-                title: "For business transfers",
-                description:
-                  "We may use Your information to evaluate or conduct a merger, divestiture, restructuring, reorganization, dissolution, or other sale or transfer of some or all of Our assets, whether as a going concern or as part of bankruptcy, liquidation, or similar proceeding, in which Personal Data held by Us about our Service users is among the assets transferred.",
-              },
-              {
-                title: "For other purposes",
-                description:
-                  "We may use Your information for other purposes, such as data analysis, identifying usage trends, determining the effectiveness of our promotional campaigns and to evaluate and improve our Service, products, services, marketing and your experience.",
-              },
+                title: "Service Improvement",
+                description: "To analyze usage patterns and improve our verification processes and user experience.",
+                icon: "📈"
+              }
             ].map((item, index) => (
-              <div key={index} className="bg-gray-50 p-4 rounded-lg">
-                <h5 className="font-semibold text-gray-800 mb-2">• {item.title}:</h5>
-                <p className="text-gray-700">{item.description}</p>
+              <div key={index} className="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-lg border border-gray-200">
+                <div className="flex items-start space-x-3">
+                  <span className="text-2xl">{item.icon}</span>
+                  <div>
+                    <h5 className="font-semibold text-gray-800 mb-2">{item.title}</h5>
+                    <p className="text-gray-700 text-sm">{item.description}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
 
-          <div className="mt-8">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">
-              We may share Your personal information in the following situations:
-            </h4>
-
-            <div className="space-y-4">
-              {[
-                {
-                  title: "With Service Providers",
-                  description:
-                    "We may share Your personal information with Service Providers to monitor and analyze the use of our Service, to contact You.",
-                },
-                {
-                  title: "For business transfers",
-                  description:
-                    "We may share or transfer Your personal information in connection with, or during negotiations of, any merger, sale of Company assets, financing, or acquisition of all or a portion of Our business to another company.",
-                },
-                {
-                  title: "With Affiliates",
-                  description:
-                    "We may share Your information with Our affiliates, in which case we will require those affiliates to honor this Privacy Policy. Affiliates include Our parent company and any other subsidiaries, joint venture partners or other companies that We control or that are under common control with Us.",
-                },
-                {
-                  title: "With business partners",
-                  description:
-                    "We may share Your information with Our business partners to offer You certain products, services or promotions.",
-                },
-                {
-                  title: "With other users",
-                  description:
-                    "when You share personal information or otherwise interact in the public areas with other users, such information may be viewed by all users and may be publicly distributed outside. If You interact with other users or register through a Third-Party Social Media Service, Your contacts on the Third-Party Social Media Service may see Your name, profile, pictures and description of Your activity. Similarly, other users will be able to view descriptions of Your activity, communicate with You and view Your profile.",
-                },
-                {
-                  title: "With Your consent",
-                  description: "We may disclose Your personal information for any other purpose with Your consent.",
-                },
-              ].map((item, index) => (
-                <div key={index} className="bg-blue-50 p-4 rounded-lg">
-                  <h5 className="font-semibold text-gray-800 mb-2">• {item.title}:</h5>
-                  <p className="text-gray-700">{item.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      ),
-    },
-    {
-      id: "data-retention",
-      title: "Data Retention & Transfer",
-      icon: <Globe className="w-5 h-5" />,
-      content: (
-        <div className="space-y-6">
-          <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-3">Retention of Your Personal Data</h4>
-            <p className="text-gray-700 mb-4">
-              The Company will retain Your Personal Data only for as long as is necessary for the purposes set out in
-              this Privacy Policy. We will retain and use Your Personal Data to the extent necessary to comply with our
-              legal obligations (for example, if we are required to retain your data to comply with applicable laws),
-              resolve disputes, and enforce our legal agreements and policies.
-            </p>
-            <p className="text-gray-700">
-              The Company will also retain Usage Data for internal analysis purposes. Usage Data is generally retained
-              for a shorter period of time, except when this data is used to strengthen the security or to improve the
-              functionality of Our Service, or We are legally obligated to retain this data for longer time periods.
-            </p>
-          </div>
-
-          <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-3">Transfer of Your Personal Data</h4>
-            <p className="text-gray-700 mb-4">
-              Your information, including Personal Data, is processed at the Company's operating offices and in any
-              other places where the parties involved in the processing are located. It means that this information may
-              be transferred to — and maintained on — computers located outside of Your state, province, country or
-              other governmental jurisdiction where the data protection laws may differ than those from Your
-              jurisdiction.
-            </p>
-            <p className="text-gray-700 mb-4">
-              Your consent to this Privacy Policy followed by Your submission of such information represents Your
-              agreement to that transfer.
-            </p>
-            <p className="text-gray-700">
-              The Company will take all steps reasonably necessary to ensure that Your data is treated securely and in
-              accordance with this Privacy Policy and no transfer of Your Personal Data will take place to an
-              organization or a country unless there are adequate controls in place including the security of Your data
-              and other personal information.
-            </p>
-          </div>
-
-          <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-3">Delete Your Personal Data</h4>
-            <p className="text-gray-700 mb-4">
-              You have the right to delete or request that We assist in deleting the Personal Data that We have
-              collected about You.
-            </p>
-            <p className="text-gray-700 mb-4">
-              Our Service may give You the ability to delete certain information about You from within the Service.
-            </p>
-            <p className="text-gray-700 mb-4">
-              You may update, amend, or delete Your information at any time by signing in to Your Account, if you have
-              one, and visiting the account settings section that allows you to manage Your personal information. You
-              may also contact Us to request access to, correct, or delete any personal information that You have
-              provided to Us.
-            </p>
-            <p className="text-gray-700">
-              Please note, however, that We may need to retain certain information when we have a legal obligation or
-              lawful basis to do so.
+          <div className="mt-8 bg-red-50 border border-red-200 p-4 rounded-lg">
+            <h4 className="text-red-800 font-semibold mb-2">Data Sharing Limitations</h4>
+            <p className="text-red-700 text-sm">
+              We do not sell your personal data to third parties. Sharing is limited to authorized service providers, regulatory compliance, and legal requirements only.
             </p>
           </div>
         </div>
       ),
     },
     {
-      id: "disclosure-security",
-      title: "Disclosure & Security",
+      id: "data-security",
+      title: "Data Security & Protection",
       icon: <Shield className="w-5 h-5" />,
       content: (
         <div className="space-y-6">
-          <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-3">Disclosure of Your Personal Data</h4>
+          <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
+            <h4 className="text-green-800 font-semibold mb-2">Enterprise-Grade Security</h4>
+            <p className="text-green-700">We implement bank-level security measures to protect your sensitive information throughout the verification process.</p>
+          </div>
 
-            <div className="mb-6">
-              <h5 className="text-md font-semibold text-gray-800 mb-3">Business Transactions</h5>
-              <p className="text-gray-700">
-                If the Company is involved in a merger, acquisition or asset sale, Your Personal Data may be
-                transferred. We will provide notice before Your Personal Data is transferred and becomes subject to a
-                different Privacy Policy.
-              </p>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-4">
+              <h4 className="text-lg font-semibold text-gray-900">Technical Safeguards</h4>
+              <ul className="space-y-2">
+                {[
+                  "256-bit SSL/TLS encryption in transit",
+                  "AES-256 encryption at rest",
+                  "Multi-factor authentication",
+                  "Regular security audits and penetration testing",
+                  "SOC 2 Type II compliance",
+                  "GDPR and CCPA compliance measures"
+                ].map((item, index) => (
+                  <li key={index} className="flex items-center text-gray-700">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="mb-6">
-              <h5 className="text-md font-semibold text-gray-800 mb-3">Law enforcement</h5>
-              <p className="text-gray-700">
-                Under certain circumstances, the Company may be required to disclose Your Personal Data if required to
-                do so by law or in response to valid requests by public authorities (e.g. a court or a government
-                agency).
-              </p>
-            </div>
-
-            <div className="mb-6">
-              <h5 className="text-md font-semibold text-gray-800 mb-3">Other legal requirements</h5>
-              <p className="text-gray-700 mb-4">
-                The Company may disclose Your Personal Data in the good faith belief that such action is necessary to:
-              </p>
-              <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                <li>Comply with a legal obligation</li>
-                <li>Protect and defend the rights or property of the Company</li>
-                <li>Prevent or investigate possible wrongdoing in connection with the Service</li>
-                <li>Protect the personal safety of Users of the Service or the public</li>
-                <li>Protect against legal liability</li>
+            <div className="space-y-4">
+              <h4 className="text-lg font-semibold text-gray-900">Operational Security</h4>
+              <ul className="space-y-2">
+                {[
+                  "Access controls and role-based permissions",
+                  "Employee background checks and training",
+                  "24/7 security monitoring and incident response",
+                  "Secure data centers with physical access controls",
+                  "Regular data backups and disaster recovery",
+                  "Vendor security assessments"
+                ].map((item, index) => (
+                  <li key={index} className="flex items-center text-gray-700">
+                    <div className="w-2 h-2 bg-gray-500 rounded-full mr-3"></div>
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
 
-          <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-3">Security of Your Personal Data</h4>
-            <p className="text-gray-700">
-              The security of Your Personal Data is important to Us, but remember that no method of transmission over
-              the Internet, or method of electronic storage is 100% secure. While We strive to use commercially
-              acceptable means to protect Your Personal Data, We cannot guarantee its absolute security.
+          <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
+            <h4 className="text-yellow-800 font-semibold mb-2">Security Incident Response</h4>
+            <p className="text-yellow-700 text-sm">
+              In the unlikely event of a security breach, we will notify affected users within 72 hours and work with relevant authorities to minimize impact.
             </p>
           </div>
         </div>
       ),
     },
     {
-      id: "additional-policies",
-      title: "Additional Policies",
+      id: "user-rights",
+      title: "Your Privacy Rights",
       icon: <Users className="w-5 h-5" />,
       content: (
         <div className="space-y-6">
-          <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-3">Children's Privacy</h4>
-            <p className="text-gray-700 mb-4">
-              Our Service does not address anyone under the age of 13. We do not knowingly collect personally
-              identifiable information from anyone under the age of 13. If You are a parent or guardian and You are
-              aware that Your child has provided Us with Personal Data, please contact Us. If We become aware that We
-              have collected Personal Data from anyone under the age of 13 without verification of parental consent, We
-              take steps to remove that information from Our servers.
-            </p>
-            <p className="text-gray-700">
-              If We need to rely on consent as a legal basis for processing Your information and Your country requires
-              consent from a parent, We may require Your parent's consent before We collect and use that information.
-            </p>
+          <p className="text-gray-700 mb-4">You have the following rights regarding your personal data:</p>
+
+          <div className="space-y-4">
+            {[
+              {
+                title: "Right to Access",
+                description: "Request copies of your personal data and KYC information we hold about you.",
+                action: "Submit a data access request through our support portal."
+              },
+              {
+                title: "Right to Rectification",
+                description: "Request correction of inaccurate or incomplete personal information.",
+                action: "Contact our support team with documentation of correct information."
+              },
+              {
+                title: "Right to Erasure",
+                description: "Request deletion of your personal data, subject to legal retention requirements.",
+                action: "Submit a deletion request (note: some data must be retained for compliance)."
+              },
+              {
+                title: "Right to Data Portability",
+                description: "Receive your personal data in a structured, machine-readable format.",
+                action: "Request data export through your account settings or support."
+              },
+              {
+                title: "Right to Object",
+                description: "Object to processing of your personal data for direct marketing purposes.",
+                action: "Opt-out through account preferences or email unsubscribe links."
+              },
+              {
+                title: "Right to Restrict Processing",
+                description: "Request limitation of processing in certain circumstances.",
+                action: "Contact our Data Protection Officer with your specific request."
+              }
+            ].map((right, index) => (
+              <div key={index} className="border border-gray-200 rounded-lg p-5">
+                <h5 className="font-semibold text-gray-800 mb-2">{right.title}</h5>
+                <p className="text-gray-700 mb-3">{right.description}</p>
+                <div className="bg-gray-50 p-3 rounded text-sm">
+                  <span className="font-medium text-gray-800">How to exercise: </span>
+                  <span className="text-gray-700">{right.action}</span>
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-3">Links to Other Websites</h4>
-            <p className="text-gray-700 mb-4">
-              Our Service may contain links to other websites that are not operated by Us. If You click on a third party
-              link, You will be directed to that third party's site. We strongly advise You to review the Privacy Policy
-              of every site You visit.
-            </p>
-            <p className="text-gray-700">
-              We have no control over and assume no responsibility for the content, privacy policies or practices of any
-              third party sites or services.
-            </p>
-          </div>
-
-          <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-3">Changes to this Privacy Policy</h4>
-            <p className="text-gray-700 mb-4">
-              We may update Our Privacy Policy from time to time. We will notify You of any changes by posting the new
-              Privacy Policy on this page.
-            </p>
-            <p className="text-gray-700 mb-4">
-              We will let You know via email and/or a prominent notice on Our Service, prior to the change becoming
-              effective and update the "Last updated" date at the top of this Privacy Policy.
-            </p>
-            <p className="text-gray-700">
-              You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy
-              are effective when they are posted on this page.
-            </p>
+          <div className="bg-gray-900 text-white p-6 rounded-lg">
+            <h4 className="text-white font-semibold mb-3">Data Retention Policy</h4>
+            <div className="grid gap-4 md:grid-cols-2 text-sm">
+              <div>
+                <h5 className="font-medium mb-2 text-gray-300">KYC Documents:</h5>
+                <p className="text-gray-400">Retained for 5 years after account closure as per regulatory requirements</p>
+              </div>
+              <div>
+                <h5 className="font-medium mb-2 text-gray-300">Transaction Logs:</h5>
+                <p className="text-gray-400">Retained for 7 years for compliance and audit purposes</p>
+              </div>
+              <div>
+                <h5 className="font-medium mb-2 text-gray-300">Marketing Data:</h5>
+                <p className="text-gray-400">Retained until you opt-out or withdraw consent</p>
+              </div>
+              <div>
+                <h5 className="font-medium mb-2 text-gray-300">Support Records:</h5>
+                <p className="text-gray-400">Retained for 3 years for service quality purposes</p>
+              </div>
+            </div>
           </div>
         </div>
       ),
-    },
+    }
   ]
-useEffect(()=>{
-     window.scrollTo({
-    top: 0,
-    behavior: "smooth", 
-  });
-  },[])
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [])
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <TopBar/>
-      <HomePageHeader/>
-      {/* <div className="bg-gradient-to-r from-blue-600 to-teal-600 text-white py-16">
+    <>
+    <TopBar/>
+    <Header/>
+    <div className="min-h-screen bg-gray-50">
+      {/* Professional Header */}
+  
+
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-gray-900 via-gray-900 to-gray-900 text-white py-16">
         <div className="max-w-4xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -587,49 +391,34 @@ useEffect(()=>{
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <Shield className="w-16 h-16 mx-auto mb-6 text-white" />
+            <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+              <Shield className="w-5 h-5 mr-2" />
+              <span className="text-sm font-medium">Privacy & Data Protection</span>
+            </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Privacy Policy</h1>
-            <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-              Your privacy is important to us. Learn how we collect, use, and protect your personal information.
+            <p className="text-xl text-gray-100 max-w-2xl mx-auto mb-6">
+              We are committed to protecting your privacy and securing your personal information with the highest standards of care and transparency.
             </p>
-            <div className="mt-6 text-sm text-blue-200">
-              Last updated:{" "}
-              {new Date().toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
+            <div className="flex flex-wrap justify-center gap-6 text-sm">
+              <div className="flex items-center">
+                <Lock className="w-4 h-4 mr-2" />
+                <span>Bank-Level Security</span>
+              </div>
+              <div className="flex items-center">
+                <Shield className="w-4 h-4 mr-2" />
+                <span>GDPR Compliant</span>
+              </div>
+              <div className="flex items-center">
+                <Eye className="w-4 h-4 mr-2" />
+                <span>Full Transparency</span>
+              </div>
             </div>
           </motion.div>
         </div>
-      </div> */}
-       <div className="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-16">
-              <div className="max-w-4xl mx-auto px-6">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="text-center"
-                >
-                  <Shield className="w-16 h-16 mx-auto mb-6 text-white" />
-                  <h1 className="text-4xl md:text-5xl font-bold mb-4">Privacy Policy</h1>
-                  <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-                     Your privacy is important to us. Learn how we collect, use, and protect your personal information.
-                  </p>
-                  <div className="mt-6 text-sm text-gray-400">
-                    Last updated:{" "}
-                    {new Date().toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </div>
-                </motion.div>
-              </div>
-            </div>
+      </div>
 
-      {/* Content */}
-      <div className="max-w-4xl mx-auto px-6 py-12">
+      {/* Content Sections */}
+      <div className="max-w-5xl mx-auto px-6 py-12">
         <div className="space-y-6">
           {sections.map((section, index) => (
             <motion.div
@@ -638,21 +427,31 @@ useEffect(()=>{
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="shadow-lg border border-gray-200 overflow-hidden">
+              <Card className="shadow-lg border border-gray-200 overflow-hidden bg-white">
                 <button
                   onClick={() => toggleSection(section.id)}
-                  className="w-full p-6 text-left hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset"
+                  className="w-full p-6 text-left hover:bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-inset"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
-                      <div className="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600">
+                      <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-lg flex items-center justify-center text-white shadow-md">
                         {section.icon}
                       </div>
-                      <h2 className="text-xl font-semibold text-gray-900">{section.title}</h2>
+                      <div>
+                        <h2 className="text-xl font-semibold text-gray-900">{section.title}</h2>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {section.id === "overview" && "Essential information about our privacy practices"}
+                          {section.id === "definitions" && "Key terms and their meanings"}
+                          {section.id === "data-collection" && "What information we collect and why"}
+                          {section.id === "data-usage" && "How we use your personal information"}
+                          {section.id === "data-security" && "Our commitment to protecting your data"}
+                          {section.id === "user-rights" && "Your rights and how to exercise them"}
+                        </p>
+                      </div>
                     </div>
                     <div className="flex-shrink-0">
                       {expandedSection === section.id ? (
-                        <ChevronDown className="w-5 h-5 text-gray-500" />
+                        <ChevronDown className="w-5 h-5 text-gray-600" />
                       ) : (
                         <ChevronRight className="w-5 h-5 text-gray-500" />
                       )}
@@ -660,7 +459,6 @@ useEffect(()=>{
                   </div>
                 </button>
                 
-
                 <motion.div
                   initial={false}
                   animate={{
@@ -679,42 +477,68 @@ useEffect(()=>{
           ))}
         </div>
 
-        {/* Contact Section */}
+        {/* Contact & Support Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mt-12"
         >
-<Card className="shadow-lg border border-gray-200 bg-gradient-to-r from-blue-50 to-teal-50">
-  <CardContent className="p-8">
-    <div className="text-center">
-      <Mail className="w-12 h-12 mx-auto mb-4 text-blue-600" />
-      <h3 className="text-2xl font-bold text-gray-900 mb-4">Contact Us</h3>
-      <p className="text-gray-700 mb-6">
-        If you have any questions about this Privacy Policy, You can contact us:
-      </p>
-      <div className="flex flex-col lg:flex-row items-center justify-center gap-6">
-        <button
-          onClick={() => navigate("/contact-us")}
-          className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-md hover:shadow-lg whitespace-nowrap cursor-pointer"
-        >
-          <Globe className="w-5 h-5 mr-2 flex-shrink-0" />
-          Visit Contact Page
-        </button>
-        <div className="flex items-start text-gray-600 max-w-sm">
-          <MapPin className="w-5 h-5 mr-2 mt-0.5 flex-shrink-0" />
-          <span className="text-sm">
-            A 24/5, Mohan Cooperative Industrial Area, Badarpur, Second Floor, New Delhi 110044
-          </span>
-        </div>
-      </div>
-    </div>
-  </CardContent>
-</Card>
+          <Card className="shadow-xl border border-gray-200 bg-gradient-to-br from-white to-gray-50">
+            <CardContent className="p-8">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center bg-gray-100 rounded-full p-3 mb-4">
+                  <Mail className="w-6 h-6 text-gray-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Need Help with Privacy?</h3>
+                <p className="text-gray-600">
+                  Our Data Protection Officer and support team are here to assist you with any privacy-related questions or requests.
+                </p>
+              </div>
+              
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="text-center p-4 bg-white rounded-lg border border-gray-200">
+                  <Building2 className="w-8 h-8 mx-auto mb-3 text-gray-600" />
+                  <h4 className="font-semibold text-gray-900 mb-2">Data Protection Officer</h4>
+                  <p className="text-gray-600 text-sm mb-3">For privacy-specific inquiries and data subject requests</p>
+                  <button className="text-gray-600 hover:text-gray-700 text-sm font-medium">
+                    support@verifyekyc.com
+                  </button>
+                </div>
+                
+                <div className="text-center p-4 bg-white rounded-lg border border-gray-200">
+                  <Phone className="w-8 h-8 mx-auto mb-3 text-green-600" />
+                  <h4 className="font-semibold text-gray-900 mb-2">Support Hotline</h4>
+                  <p className="text-gray-600 text-sm mb-3">24/7 customer support for urgent privacy concerns</p>
+                  <button className="text-green-600 hover:text-green-700 text-sm font-medium">
+                    +91-7982981354
+                  </button>
+                </div>
+                
+                <div className="text-center p-4 bg-white rounded-lg border border-gray-200">
+                  <MapPin className="w-8 h-8 mx-auto mb-3 text-purple-600" />
+                  <h4 className="font-semibold text-gray-900 mb-2">Corporate Office</h4>
+                  <p className="text-gray-600 text-sm mb-3">Visit us for in-person consultations</p>
+                  <p className="text-purple-600 text-sm font-medium">
+                    Dwarka sector 19, New Delhi 110071
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-8 p-4 bg-gray-900 rounded-lg text-center">
+                <p className="text-white font-medium mb-2">Regulatory Compliance</p>
+                <p className="text-gray-400 text-sm">
+                  This privacy policy complies with GDPR, CCPA, and Indian Personal Data Protection regulations.
+                  We are committed to maintaining the highest standards of data protection and privacy rights.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
         </motion.div>
       </div>
-      <LandingPageFooter/>
     </div>
+    <Footer/>
+    </>
+
   )
 }

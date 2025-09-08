@@ -1,9 +1,12 @@
 import React from 'react';
 
 const WhatsAppIcon = () => {
+  const phoneNumber = "917982981354"; // apna number yaha daalo
+  const preFilledMessage = "Hello, I want to know more about your services."; // yaha apna default message daal do
+
   return (
     <a
-      href="https://wa.me/919560652708"
+      href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(preFilledMessage)}`}
       className="fixed bottom-10 left-10 z-50 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 hover:scale-110 transition-all duration-300 animate-bounce"
       target="_blank"
       rel="noopener noreferrer"

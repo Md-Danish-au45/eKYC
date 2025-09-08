@@ -56,11 +56,11 @@ export default function FounderProfile() {
             {/* ⭐️ MODIFIED: Name and Title are now at the top of the description */}
             <div className="space-y-6">
               <div className="text-left">
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">Ankur Bhatia</h3>
+                <h3 className="text-3xl font-bold text-gray-900 mb-2">Md Danish</h3>
                 <p className="text-xl text-gray-600 mb-6">Founder and CEO</p>
               </div>
               <p className="text-lg leading-relaxed text-gray-700">
-                As Founder and Chief Executive Officer of Navigant, Ankur Bhatia is responsible for the vision and the global planning with business strategies in place at Navigant. An expert at raising and mentoring teams and making them successful, Ankur being an effective leader has continually diversified its solution offerings and promised to take Navigant Technologies to the forefront of the global outsourcing industry.
+                As Founder and Chief Executive Officer of Bringmar, Md Danish is responsible for the vision and the global planning with business strategies in place at Navigant. An expert at raising and mentoring teams and making them successful, Danish being an effective leader has continually diversified its solution offerings and promised to take Md Danish to the forefront of the global outsourcing industry.
               </p>
             </div>
           </motion.div>

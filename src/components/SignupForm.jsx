@@ -1,9 +1,8 @@
-
 "use client"
 
 import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { Mail, Lock, User, ArrowRight, Phone, ArrowLeft, Shield } from "lucide-react"
+import { Mail, Lock, User, ArrowRight, Phone, ArrowLeft, Shield, CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AuthCard } from "@/cards/AuthCard"
 import { FloatingLabel } from "@/components/FloatingLabel"
@@ -12,6 +11,7 @@ import { useSignupMutation, useLoginWithGoogleMutation, useVerifyEmailOtpMutatio
 import { auth, googleProvider } from "@/firebase/firebaseConfig.js"
 import { signInWithPopup } from "firebase/auth"
 import { useDispatch } from "react-redux"
+import logo from "../assets/logo.png"
 
 
 export function SignUpForm() {
@@ -245,46 +245,81 @@ export function SignUpForm() {
   const getSubtitle = () => {
     if (step === 1) {
       return phoneFlow 
-        ? "We'll send you a verification code" 
-        : "Let's get you started with your journey"
+        ? "Enter your phone number for verification" 
+        : "Secure KYC verification platform for businesses"
     } else if (step === 2) {
-      return "Create a secure password for your account"
+      return "Create a secure password to protect your account"
     } else if (step === 3) {
-      return `We've sent a verification code to ${formData.email}`
+      return `Verification code sent to ${formData.email}`
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-50 flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-cyan-400/20 to-blue-600/20 rounded-full blur-3xl animate-pulse delay-700"></div>
-      </div>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        {/* Header */}
+ <div className="text-center mb-8">
+  {/* Logo Image */}
+  <img
+    src={logo} // <-- yaha apna logo path lagao (e.g. /assets/logo.png)
+    alt="Verify E-KYC Logo"
+    className="mx-auto w-20 h-20 object-contain mb-4"
+  />
 
-      <div className="w-full max-w-md relative z-10">
-        <AuthCard 
-          title="Create Account" 
-          subtitle={getSubtitle()}
-        >
+  {/* Company Name */}
+  <h1 className="text-2xl font-bold text-gray-900 mb-2">
+    <span className="text-green-600">Verify</span>{" "}
+    <span className="text-blue-600">E-</span>
+    <span className="text-orange-500">KYC</span>
+  </h1>
+
+  {/* Slogan */}
+  <p className="text-sm text-gray-600">
+    Trusted Verification <span className="text-blue-600">For A</span>{" "}
+    <span className="text-orange-500">Digital World</span>
+  </p>
+</div>
+
+
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+          {/* Form Header */}
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">Create Account</h2>
+            <p className="text-sm text-gray-600">{getSubtitle()}</p>
+          </div>
+
           {/* Back button */}
           {step > 1 && (
             <button 
               onClick={handleBack} 
-              className="flex items-center text-sm text-gray-600 hover:text-gray-800 mb-6 transition-colors duration-200 group"
+              className="flex items-center text-sm text-gray-500 hover:text-gray-700 mb-6 transition-colors"
             >
-              <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform duration-200" />
-              Back to previous step
+              <ArrowLeft className="w-4 h-4 mr-1" />
+              Back
             </button>
           )}
 
           {/* Progress indicator */}
           {!phoneFlow && (
-            <div className="flex items-center justify-center mb-6">
-              <div className="flex space-x-2">
-                <div className={`w-2 h-2 rounded-full transition-all duration-300 ${step >= 1 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
-                <div className={`w-2 h-2 rounded-full transition-all duration-300 ${step >= 2 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
-                <div className={`w-2 h-2 rounded-full transition-all duration-300 ${step >= 3 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
+            <div className="flex items-center mb-8">
+              <div className="flex items-center flex-1">
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full text-xs font-medium ${
+                  step >= 1 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'
+                }`}>
+                  1
+                </div>
+                <div className={`flex-1 h-1 mx-2 ${step >= 2 ? 'bg-blue-600' : 'bg-gray-200'}`}></div>
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full text-xs font-medium ${
+                  step >= 2 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'
+                }`}>
+                  2
+                </div>
+                <div className={`flex-1 h-1 mx-2 ${step >= 3 ? 'bg-blue-600' : 'bg-gray-200'}`}></div>
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full text-xs font-medium ${
+                  step >= 3 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'
+                }`}>
+                  3
+                </div>
               </div>
             </div>
           )}
@@ -316,7 +351,7 @@ export function SignUpForm() {
                 <Button
                   type="button"
                   onClick={handleNext}
-                  className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
+                  className="w-full h-11 bg-gray-900 hover:bg-gray-700 text-white rounded-md font-medium transition-colors"
                 >
                   Continue
                   <ArrowRight className="ml-2 w-4 h-4" />
@@ -338,7 +373,7 @@ export function SignUpForm() {
                 />
                 <Button 
                   type="submit" 
-                  className="w-full h-12 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
+                  className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition-colors"
                 >
                   Send Verification Code
                 </Button>
@@ -375,18 +410,15 @@ export function SignUpForm() {
                 <Button 
                   type="submit" 
                   disabled={isSigningUp} 
-                  className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] shadow-lg hover:shadow-xl disabled:transform-none disabled:shadow-lg"
+                  className="w-full h-11 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-md font-medium transition-colors"
                 >
                   {isSigningUp ? (
                     <div className="flex items-center">
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                      Sending OTP...
+                      Creating Account...
                     </div>
                   ) : (
-                    <>
-                      Continue
-                      <ArrowRight className="ml-2 w-4 h-4" />
-                    </>
+                    "Create Account"
                   )}
                 </Button>
               </div>
@@ -396,11 +428,12 @@ export function SignUpForm() {
             {step === 3 && !phoneFlow && (
               <div className="space-y-5">
                 <div className="text-center mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Shield className="w-8 h-8 text-white" />
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <Shield className="w-6 h-6 text-blue-600" />
                   </div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">Verify Your Email</h3>
                   <p className="text-sm text-gray-600">
-                    Enter the 6-digit code we sent to your email
+                    Enter the 6-digit code we sent to your email address
                   </p>
                 </div>
 
@@ -410,26 +443,24 @@ export function SignUpForm() {
                       type="text"
                       value={formData.otp}
                       onChange={handleOtpChange}
-                      placeholder="Enter 6-digit OTP"
-                      className={`w-full h-14 text-center text-2xl font-mono tracking-widest border-2 rounded-xl transition-all duration-200 ${
+                      placeholder="000000"
+                      className={`w-full h-14 text-center text-xl font-mono tracking-wider border rounded-md transition-colors ${
                         errors.otp 
-                          ? 'border-red-500 focus:border-red-600' 
-                          : 'border-gray-200 focus:border-blue-500'
-                      } focus:outline-none focus:ring-4 focus:ring-blue-500/20`}
+                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                          : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+                      } focus:outline-none focus:ring-2 focus:ring-opacity-50`}
                       maxLength={6}
                       autoComplete="one-time-code"
                     />
                     {errors.otp && (
-                      <p className="text-red-500 text-sm mt-2 flex items-center">
-                        {errors.otp}
-                      </p>
+                      <p className="text-red-600 text-sm mt-2">{errors.otp}</p>
                     )}
                   </div>
 
                   <Button 
                     type="submit" 
                     disabled={isVerifyingOtp || formData.otp.length !== 6} 
-                    className="w-full h-12 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] shadow-lg hover:shadow-xl disabled:transform-none disabled:shadow-lg"
+                    className="w-full h-11 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-md font-medium transition-colors"
                   >
                     {isVerifyingOtp ? (
                       <div className="flex items-center">
@@ -443,22 +474,18 @@ export function SignUpForm() {
                 </div>
 
                 {/* Resend OTP */}
-                <div className="text-center">
-                  <p className="text-sm text-gray-600 mb-2">
-                    Didn't receive the code?
-                  </p>
+                <div className="text-center pt-4">
+                  <p className="text-sm text-gray-600 mb-2">Didn't receive the code?</p>
                   {canResendOtp ? (
                     <button
                       type="button"
                       onClick={handleResendOtp}
-                      className="text-blue-600 hover:text-blue-800 font-semibold text-sm transition-colors duration-200"
+                      className="text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors"
                     >
-                      Resend OTP
+                      Resend Code
                     </button>
                   ) : (
-                    <p className="text-gray-500 text-sm">
-                      Resend OTP in {otpTimer}s
-                    </p>
+                    <p className="text-gray-500 text-sm">Resend in {otpTimer}s</p>
                   )}
                 </div>
               </div>
@@ -469,56 +496,52 @@ export function SignUpForm() {
           {step === 1 && (
             <>
               {/* Divider */}
-              <div className="relative my-8">
+              <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gray-200"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white text-gray-500 font-medium">or continue with</span>
+                  <span className="px-3 bg-white text-gray-500">or</span>
                 </div>
               </div>
 
               {/* Alternative sign-in options */}
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {/* Google Sign-in */}
-                {/* Phone option */}
-                {/* <button
-                  onClick={() => { setPhoneFlow(true); setStep(1); setErrors({}) }}
-                  className="w-full h-12 flex items-center justify-center border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 transform hover:scale-[1.02] bg-white hover:bg-gray-50 group"
-                >
-                  <Phone className="w-5 h-5 text-green-600 mr-3 group-hover:text-green-700 transition-colors" />
-                  <span className="text-gray-700 font-medium group-hover:text-gray-900 transition-colors">
-                    Continue with Phone
-                  </span>
-                </button>
                 <button
                   onClick={handleGoogleSignIn}
                   disabled={isGoogleLoading}
-                  className="w-full h-12 flex items-center justify-center border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 transform hover:scale-[1.02] bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed group"
+                  className="w-full h-11 flex items-center justify-center border border-gray-300 hover:border-gray-400 rounded-md transition-colors bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isGoogleLoading ? (
                     <div className="w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
                   ) : (
                     <>
                       <GoogleLogo />
-                      <span className="text-gray-700 font-medium group-hover:text-gray-900 transition-colors">
-                        Continue with Google
-                      </span>
+                      <span className="text-gray-700 font-medium">Continue with Google</span>
                     </>
                   )}
-                </button> */}
+                </button>
 
+                {/* Phone option */}
+                <button
+                  onClick={() => { setPhoneFlow(true); setStep(1); setErrors({}) }}
+                  className="w-full h-11 flex items-center justify-center border border-gray-300 hover:border-gray-400 rounded-md transition-colors bg-white hover:bg-gray-50"
+                >
+                  <Phone className="w-5 h-5 text-gray-600 mr-3" />
+                  <span className="text-gray-700 font-medium">Continue with Phone</span>
+                </button>
               </div>
 
-              {/* Additional info */}
+              {/* Terms */}
               <div className="mt-6 text-center">
                 <p className="text-xs text-gray-500 leading-relaxed">
-                  By continuing, you agree to our{" "}
-                  <a href="https://e-kyc-eight.vercel.app/terms-and-condition" className="text-blue-600 hover:text-blue-800 underline font-medium">
-                    Terms & Condition
+                  By creating an account, you agree to our{" "}
+                  <a href="https://e-kyc-eight.vercel.app/terms-and-condition" className="text-blue-600 hover:text-blue-700 underline">
+                    Terms of Service
                   </a>{" "}
                   and{" "}
-                  <a href="https://e-kyc-eight.vercel.app/privacy-policy" className="text-blue-600 hover:text-blue-800 underline font-medium">
+                  <a href="https://e-kyc-eight.vercel.app/privacy-policy" className="text-blue-600 hover:text-blue-700 underline">
                     Privacy Policy
                   </a>
                 </p>
@@ -527,19 +550,25 @@ export function SignUpForm() {
           )}
 
           {/* Login link */}
-          <div className="mt-8 text-center">
+          <div className="mt-6 text-center border-t border-gray-200 pt-6">
             <p className="text-sm text-gray-600">
               Already have an account?{" "}
               <button
                 onClick={() => navigate("/login")}
-                className="text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-200"
+                className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
               >
                 Sign in
               </button>
             </p>
           </div>
+        </div>
 
-        </AuthCard>
+        {/* Footer */}
+        <div className="text-center mt-8">
+          <p className="text-xs text-gray-500">
+            © 2024 VerifyeKYC. All rights reserved.
+          </p>
+        </div>
       </div>
     </div>
   )

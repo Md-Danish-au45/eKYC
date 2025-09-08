@@ -62,7 +62,7 @@ export const FloatingLabel = ({
           <Icon className={`
             absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 z-10
             transition-colors duration-200
-            ${isFocused ? "text-blue-600" : error ? "text-red-500" : "text-gray-400"}
+            ${isFocused ? "text-gray-600" : error ? "text-red-500" : "text-gray-400"}
             ${disabled ? "opacity-50" : ""}
           `} />
         )}

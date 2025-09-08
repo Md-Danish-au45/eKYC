@@ -188,7 +188,7 @@ const SocialMediaLinks = () => (
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Instagram"
-      className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+      className="text-gray-600 hover:text-gray-900 transition-colors duration-200"
     >
       <Instagram className="w-8 h-8" />
     </a>

@@ -1,143 +1,193 @@
-// src/pages/ServicesPage.jsx
-
 "use client";
 
 import React from 'react';
-import ServiceCard, { GovernmentIdVisual, CompanyCredentialVisual, BankVisual, EducationVisual } from './ServiceShowcaseCard';
+import ServiceCard from './ServiceShowcaseCard.jsx';
 import { Shield, Building2, Landmark, GraduationCap, FileSignature, Home } from "lucide-react";
-import Aadhar from "@/assets/Digital Identity Verification.png"
-import Buissness from "@/assets/Buissness.png"
-import GOI from "@/assets/Digital eSign.png"
-import Property from "@/assets/Property.png"
-// This is the parent component that holds all the data.
+
 export default function ServicesShowcase() {
 const servicesData = [
   {
     id: 1,
     layout: 'image-right',
     theme: {
-      primary: '#1987BF',
-      secondary: '#8B5CF6',
-      gradientFrom: 'from-[#1987BF]',
-      gradientTo: 'to-blue-600',
-      badgeBg: 'bg-[#1987BF]/10',
-      badgeText: 'text-[#1987BF]',
+      primary: 'from-sky-400 to-blue-500',
+      badgeBg: 'from-sky-100 to-blue-100',
+      badgeText: 'text-sky-700',
+      shadow: 'shadow-sky-200 hover:shadow-sky-300',
     },
-    image:Aadhar,
+    image: "https://res.cloudinary.com/dz10btkpg/image/upload/v1757300848/Dreaming_of_a_Career_in_Beauty_Get_Trained_by_Experts_100_Job_Assistance_1_ia11bx.png",
     badgeIcon: Shield,
     badgeText: 'GOVERNMENT ID VERIFICATION',
-    titleLines: ['Digital Identity Verification'],
+    titleLines: ['Government ID Verification Service in India'],
     typewriterTexts: [
-      "We authenticate each document against its issuing authority to prevent identity fraud.",
-      "Real-time verification with 99.9% accuracy rate.",
-      "Secure  integration for seamless document validation.",
+      "Online Aadhaar, PAN, Voter ID & Driving License verification API.",
+      "Prevent identity fraud with 99.9% accurate document authentication.",
+      "Best KYC and government ID verification solution for businesses.",
     ],
     features: [
-      "Verify Aadhaar, PAN, Voter ID, Driving License, and other IDs",
-      "Real-time  verification",
-      "99.9% accuracy guarantee",
-      "Secure data handling",
+      "Verify Aadhaar, PAN, Voter ID, Driving License instantly",
+      "Government ID verification service with real-time results",
+      "99.9% accuracy & secure data handling",
+      "Trusted KYC verification provider in India",
     ],
     ctaText: 'Explore ID Products',
-    VisualComponent: GovernmentIdVisual,
+    navTo: '/services/government-id-verification'
   },
   {
     id: 2,
     layout: 'image-left',
     theme: {
-      primary: '#8B5CF6',
-      secondary: '#1987BF',
-      gradientFrom: 'from-purple-600',
-      gradientTo: 'to-[#1987BF]',
-      badgeBg: 'bg-purple-100',
+      primary: 'from-purple-500 to-pink-600',
+      badgeBg: 'from-purple-100 to-pink-100',
       badgeText: 'text-purple-700',
+      shadow: 'shadow-purple-200 hover:shadow-purple-300',
     },
-    image:Buissness,
+    image: "https://res.cloudinary.com/dz10btkpg/image/upload/v1757300945/Dreaming_of_a_Career_in_Beauty_Get_Trained_by_Experts_100_Job_Assistance_zemuzw.png",
     badgeIcon: Building2,
     badgeText: 'COMPANY & CREDENTIALS',
-    titleLines: ['Start and Verify Your Business with Confidence'],
+    titleLines: ['Company Credential Verification Services'],
     typewriterTexts: [
-      "Verify the legitimacy of any claimed business or association.",
-      "Comprehensive business credential validation.",
-      "Ensure compliance with regulatory requirements.",
+      "Check GST Registration, FSSAI License, MSME Certificate & ROC online.",
+      "Business credential verification to prevent fraud.",
+      "Ensure compliance with regulatory requirements instantly.",
     ],
     features: [
-      "GST Registration, FSSAI License, MSME Certificate, Company Registration",
-      "Check if a business is legitimate",
-      "Accuracy you can trust",
-      "Instant fraud alerts",
+      "Instant GST, FSSAI, MSME & ROC verification services",
+      "How to check if a business is legitimate & active",
+      "Trusted company KYC & fraud detection provider",
+      "Real-time business compliance checks",
     ],
-    ctaText: 'Explore Products',
-    VisualComponent: CompanyCredentialVisual,
+    ctaText: 'Explore Business Products',
+    navTo: '/services/company-credential-verification'
+  },
+  {
+    id: 3,
+    layout: 'image-right',
+    theme: {
+      primary: 'from-emerald-500 to-green-600',
+      badgeBg: 'from-emerald-100 to-green-100',
+      badgeText: 'text-emerald-700',
+      shadow: 'shadow-emerald-200 hover:shadow-emerald-300',
+    },
+    image: "https://res.cloudinary.com/dz10btkpg/image/upload/v1757300905/Dreaming_of_a_Career_in_Beauty_Get_Trained_by_Experts_100_Job_Assistance_3_cp0jda.png",
+    badgeIcon: Landmark,
+    badgeText: 'BANK ACCOUNT VERIFICATION',
+    titleLines: ['Instant Bank Account Verification API'],
+    typewriterTexts: [
+      "Validate beneficiary accounts instantly before transfers.",
+      "Reduce payment fraud with real-time bank account checks.",
+      "Compliant bank verification services as per RBI guidelines.",
+    ],
+    features: [
+      "Instant bank account & IFSC code validation API",
+      "How to verify beneficiary account before payment",
+      "Supports all major Indian banks securely",
+      "Fraud prevention with real-time bank verification",
+    ],
+    ctaText: 'Explore Bank Products',
+    navTo: '/services/bank-verification'
+  },
+  {
+    id: 4,
+    layout: 'image-left',
+    theme: {
+      primary: 'from-red-500 to-amber-600',
+      badgeBg: 'from-red-100 to-amber-100',
+      badgeText: 'text-red-700',
+      shadow: 'shadow-red-200 hover:shadow-red-300',
+    },
+    image: "https://res.cloudinary.com/dz10btkpg/image/upload/v1757300924/Dreaming_of_a_Career_in_Beauty_Get_Trained_by_Experts_100_Job_Assistance_4_dn8974.png",
+    badgeIcon: GraduationCap,
+    badgeText: 'EDUCATION VERIFICATION',
+    titleLines: ['Education & Degree Verification Services'],
+    typewriterTexts: [
+      "Online degree, diploma & certificate validation for hiring.",
+      "Prevent resume fraud with academic verification.",
+      "Trusted education verification services for recruitment.",
+    ],
+    features: [
+      "University & board certificate checks online",
+      "Quick turnaround for HR onboarding processes",
+      "Education verification trusted by global recruiters",
+      "100% verified academic credentials instantly",
+    ],
+    ctaText: 'Explore Education Products',
+    navTo: '/services/education-verification'
   },
   {
     id: 5,
     layout: 'image-right',
     theme: {
-      primary: '#3B82F6',
-      secondary: '#6366F1',
-      gradientFrom: 'from-blue-500',
-      gradientTo: 'to-indigo-500',
-      badgeBg: 'bg-blue-100',
+      primary: 'from-blue-500 to-indigo-600',
+      badgeBg: 'from-blue-100 to-indigo-100',
       badgeText: 'text-blue-700',
+      shadow: 'shadow-blue-200 hover:shadow-blue-300',
     },
-       image:GOI,
+    image: "https://res.cloudinary.com/dz10btkpg/image/upload/v1757300884/Dreaming_of_a_Career_in_Beauty_Get_Trained_by_Experts_100_Job_Assistance_2_wgmtxg.png",
     badgeIcon: FileSignature,
     badgeText: 'DIGITAL SIGNATURE & eSIGN',
-    titleLines: ['Go Paperless with Digital Signing'],
+    titleLines: ['Legally Valid Digital Signature Solutions'],
     typewriterTexts: [
-      "Legally binding electronic signatures for all your documents.",
-      "Streamline your paperwork and go fully digital.",
-      "Secure, compliant, and easy to integrate.",
+      "Aadhaar-based eSign services for paperless workflows.",
+      "Legally binding digital signatures compliant with IT Act, 2000.",
+      "Best eSign API integration for businesses & enterprises.",
     ],
     features: [
-      "Aadhaar-based eSign",
-      "Smooth digital workflow",
-      "Trusted accuracy",
-      "Instant fraud checks",
+      "Instant Aadhaar-based eSign for all documents",
+      "Secure, paperless digital workflow",
+      "How to integrate eSign API into your business",
+      "Legally compliant with IT Act 2000",
     ],
-    ctaText: 'Explore eSign Products ',
-    VisualComponent: GovernmentIdVisual,
+    ctaText: 'Explore eSign Products',
+    navTo: '/services/digital-signature'
   },
   {
     id: 6,
     layout: 'image-left',
     theme: {
-      primary: '#F97316',
-      secondary: '#F59E0B',
-      gradientFrom: 'from-orange-500',
-      gradientTo: 'to-amber-500',
-      badgeBg: 'bg-orange-100',
+      primary: 'from-orange-500 to-amber-600',
+      badgeBg: 'from-orange-100 to-amber-100',
       badgeText: 'text-orange-700',
+      shadow: 'shadow-orange-200 hover:shadow-orange-300',
     },
-    image:Property,
+    image: "https://res.cloudinary.com/dz10btkpg/image/upload/v1757300961/lindin_cover_otpn67.png",
     badgeIcon: Home,
     badgeText: 'PROPERTY & LAND RECORDS',
-    titleLines: ['Verify Property Ownership,', 'Check for Encumbrances', 'and Validate Titles'],
+    titleLines: ['Property & Land Record Verification Services'],
     typewriterTexts: [
-      "Access digitized land records from state authorities.",
-      "Mitigate risks in real estate transactions.",
-      "Ensure clear and marketable property titles.",
+      "Check property ownership and land records online.",
+      "Identify encumbrances before real estate purchase.",
+      "Best property verification service to prevent fraud.",
     ],
     features: [
-      "Check property details before you buy",
-      "Check for legal issues (encumbrances)",
-      "Validate land titles",
-      "Reduce the risk of fraud",
+      "Verify land & property ownership records online",
+      "How to check encumbrances before buying property",
+      "Validate property title deeds instantly",
+      "Real estate fraud prevention solutions",
     ],
-
     ctaText: 'Explore Realty Products',
-    navTo:'/contact-us',
-    VisualComponent: CompanyCredentialVisual,
+    navTo: '/services/property-verification'
   }
 ];
 
+
+
   return (
-    <section className="w-full bg-gradient-to-br from-gray-50 via-white to-blue-50 py-20 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
-        {servicesData.map((service) => (
-          <ServiceCard key={service.id} data={service} />
-        ))}
+    <section className="w-full bg-gradient-to-b from-gray-50 via-white to-white py-20 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+            Comprehensive Verification Services
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Our powerful APIs and seamless integrations ensure fast, accurate, and secure identity and credential verification for your business.
+          </p>
+        </div>
+        <div className="space-y-20">
+          {servicesData.map((service) => (
+            <ServiceCard key={service.id} data={service} />
+          ))}
+        </div>
       </div>
     </section>
   );

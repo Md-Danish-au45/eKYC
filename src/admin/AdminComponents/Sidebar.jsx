@@ -27,7 +27,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 import { logOut } from "@/features/auth/authSlice"
-import logo from "../../assets/Final.png.png" // ← अपना logo image यहां import करें
+import logo from "../../assets/logo.png" // ← अपना logo image यहां import करें
 
 const navigationItems = [
   { title: "Dashboard", icon: Home, key: "dashboard" },
@@ -97,18 +97,31 @@ export default function AdminDashboardSidebar({ isOpen, setIsOpen, activeView, o
         <SidebarProvider>
           <Sidebar collapsible="none" className="flex flex-col h-full">
 
-<SidebarHeader className="border-b border-gray-700 flex flex-col items-center" onClick={() => navigate("/")}>
-  <div className="flex flex-col items-center gap-2 ">
+<SidebarHeader 
+  className="border-b border-gray-700 flex items-center justify-between relative p-4" 
+  onClick={() => navigate("/")}
+>
+  <div className="flex items-center gap-3">
     <img 
       src={logo} 
       alt="Logo" 
-      className="w-80 h-16 object-contain" // यहाँ साइज को w-20 h-20 कर दिया गया है
+      className="w-20 h-20 object-contain"
     />
+   <h1 className="text-xl font-bold text-gray-900 mb-2">
+    <span className="text-green-600">Verify</span>{" "}
+    <span className="text-blue-600">E-</span>
+    <span className="text-orange-500">KYC</span>
+  </h1>
   </div>
-  <button onClick={() => setIsOpen(false)} className="absolute top-4 right-4 cursor-pointer lg:hidden p-1">
+
+  <button 
+    onClick={() => setIsOpen(false)} 
+    className="absolute top-4 right-4 cursor-pointer lg:hidden p-1"
+  >
     <X className="w-6 h-6 text-gray-400 hover:text-white" />
   </button>
 </SidebarHeader>
+
 
             <SidebarContent className="flex-1 p-2 overflow-y-auto">
               <SidebarGroup>

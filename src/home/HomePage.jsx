@@ -19,12 +19,12 @@ export default function HomePage() {
 useEffect(()=>{
      window.scrollTo({
     top: 0,
-    behavior: "smooth", 
+    behavior: "smooth",
   });
   },[])
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30">
+    <div className="relative min-h-screen">
 
     
 

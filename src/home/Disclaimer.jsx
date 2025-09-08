@@ -45,7 +45,7 @@ export default function DisclaimerPage() {
                 {
                   term: "Company",
                   definition:
-                    '(referred to as either "the Company", "We", "Us" or "Our" in this Disclaimer) refers to Navigant Digital Private Limited, A 24/5, Mohan Cooperative Industrial Area Badarpur, Second Floor, New Delhi 110044 India.',
+                    '(referred to as either "the Company", "We", "Us" or "Our" in this Disclaimer) refers to Bringmark Private Limited, A 24/5, Mohan Cooperative Industrial Area Badarpur, Second Floor, New Delhi 110044 India.',
                 },
                 {
                   term: "Service",
@@ -58,7 +58,7 @@ export default function DisclaimerPage() {
                 },
                 {
                   term: "Website",
-                  definition: "refers to Verify My KYC, accessible from https://verifymykyc.com/",
+                  definition: "refers to Verify My KYC, accessible from https://VerifyMyKyc.com/",
                 },
               ].map((item, index) => (
                 <div key={index} className="bg-gray-50 p-4 rounded-lg">
@@ -245,11 +245,11 @@ export default function DisclaimerPage() {
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                     <a
-                        href="mailto:Support@Verifymykyc.com"
+                        href="mailto:Support@VerifyMyKyc.com"
                         className="inline-flex items-center px-6 py-3 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-900 transition-colors duration-200 shadow-md hover:shadow-lg"
                     >
                         <Mail className="w-5 h-5 mr-2" />
-                        Support@Verifymykyc.com
+                        Support@VerifyMyKyc.com
                     </a>
                     <div
                         onClick={() => navigate("/contact-us")}

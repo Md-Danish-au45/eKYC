@@ -258,7 +258,7 @@ export function LoginForm() {
                   </label>
                   {/* <button type="button" onClick={() => setCurrentFlow('forgotPassword')} className="text-blue-600 hover:text-blue-800 font-medium hover:underline">Forgot password?</button> */}
                 </div>
-                <Button type="submit" disabled={isLoginLoading} className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-medium">
+                <Button type="submit" disabled={isLoginLoading} className="w-full h-12 bg-gradient-to-r from-gray-900 to-gray-900 text-white rounded-xl font-medium">
                   {isLoginLoading ? "Signing in..." : "Sign In"}
                 </Button>
               </div>

@@ -64,7 +64,7 @@ const HeroSection = () => {
               Trusted Identity & Background Verification for Your Home
             </h1>
             <p className="text-lg text-gray-600 mb-8">
-              Hiring domestic help or personal staff (maids, drivers, nannies, etc.) is a convenient necessity for many families – but ensuring their trustworthiness is crucial. verifyMyKyc is a digital identity verification platform tailored for individuals and households.
+              Hiring domestic help or personal staff (maids, drivers, nannies, etc.) is a convenient necessity for many families – but ensuring their trustworthiness is crucial. VerifyMyKyc is a digital identity verification platform tailored for individuals and households.
             </p>
             
             <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 mb-8">

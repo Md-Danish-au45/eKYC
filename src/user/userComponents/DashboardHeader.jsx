@@ -11,8 +11,8 @@ import { useNavigate } from "react-router-dom"
 import userPic from "@/assets/UserImage.svg"
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '@/features/auth/authSlice';
-import sidebarLogo from "@/assets/sidebarLogo.svg"
-import VerifyMyKyc from "@/assets/VerifyMyKyc.svg"
+import sidebarLogo from "@/assets/logo.png"
+import VerifyMyKyc from "@/assets/logo.png"
 
 // Generate a random color for the avatar background
 const generateRandomColor = (name) => {
@@ -87,7 +87,7 @@ export default function DashboardHeader({ sidebarOpen, setSidebarOpen }) {
           <div className="flex items-center overflow-hidden -mx-2 md:-mx-4" onClick={() => navigate("/")}>
             <img src={VerifyMyKyc  || sidebarLogo} alt="Logo" className="h-10 w-auto" />
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col ml-8 ">
             <h1 className="hidden md:block text-lg font-semibold text-gray-900 md:text-xl">
               <span>{welcomeText.substring(0, 13)}</span>
               {welcomeText.length > 13 && <span className="text-[#1987BF] font-bold">{welcomeText.substring(13)}</span>}

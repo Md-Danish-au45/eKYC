@@ -109,9 +109,9 @@ export default function BlogLandingPage() {
                           transition={{ duration: 0.6 }}
                           className="text-center"
                         >
-                          <h1 className="text-4xl md:text-5xl font-bold mb-4"> Blog</h1>
+                          <h1 className="text-4xl md:text-5xl font-bold mb-4"> Blogs</h1>
                            <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto mb-8 leading-relaxed">
-                Stay ahead with expert insights on identity verification, compliance, and digital security.
+The Future of Identity Verification and Digital Security
               </p>
                         </motion.div>
                       </div>

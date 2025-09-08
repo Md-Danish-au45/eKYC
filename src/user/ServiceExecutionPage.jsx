@@ -134,7 +134,7 @@ const CustomButton = ({ children, onClick, disabled, type = "button", className 
                 w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200
                 ${disabled 
                     ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-cyan-500 hover:bg-cyan-600 active:bg-cyan-700 hover:shadow-lg'
+                    : 'bg-green-500 hover:bg-green-600 active:bg-cyan-700 hover:shadow-lg'
                 }
                 ${className}
             `}
@@ -179,7 +179,7 @@ const CustomLabel = ({ htmlFor, children, className = "" }) => {
 // Custom Card Component
 const CustomCard = ({ children, className = "" }) => {
     return (
-        <div className={`bg-white rounded-xl shadow-sm border border-gray-200 ${className}`}>
+        <div className={`bg-white rounded-xl shadow-sm border border-gray-900 ${className}`}>
             {children}
         </div>
     );

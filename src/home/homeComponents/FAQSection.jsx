@@ -7,68 +7,69 @@ const faqData = [
   {
     id: 1,
     category: "Getting Started",
-    question: "How does VerifyMyKyc work?",
+    question: "How does Verify E-KYC work?",
     answer:
-      "VerifyMyKyc uses advanced AI and machine learning algorithms to verify identity documents in real-time. Simply upload your document through our secure web interface, and our system validates it against multiple databases and security checks within seconds. Our platform supports over 50+ document types and provides instant verification results with detailed compliance reports.",
+      "Verify E-KYC uses advanced AI and machine learning algorithms to verify identity documents in real-time. Simply upload your Aadhaar, PAN, Voter ID, or Driving License through our secure interface, and our system validates it against government databases within seconds. This online e-KYC verification solution supports over 50+ document types and provides instant results with compliance reports. If you are wondering 'What is e-KYC and how does it work?', our platform makes the process seamless and accurate.",
     popular: true,
   },
   {
     id: 2,
     category: "Security",
-    question: "Is my data secure with VerifyMyKyc?",
+    question: "Is my data secure with Verify E-KYC?",
     answer:
-      "Absolutely. We use bank-grade encryption (AES-256) and comply with international security standards including ISO 27001, SOC 2, and GDPR. Your data is encrypted both in transit and at rest, stored in secure data centers, and we never store sensitive information longer than necessary. We also provide detailed audit logs and compliance reports for your peace of mind.",
+      "Absolutely. Verify E-KYC uses bank-grade encryption (AES-256) and complies with ISO 27001, SOC 2, and GDPR standards. Your data is encrypted in transit and at rest, stored in secure servers, and never retained longer than necessary. For users asking 'Is e-KYC safe and secure online?', the answer is yes — we also provide audit logs and compliance reports for complete transparency.",
     popular: true,
   },
   {
     id: 3,
     category: "Enterprise",
-    question: "Does VerifyMyKyc work for large teams and enterprises?",
+    question: "Does Verify E-KYC work for large teams and enterprises?",
     answer:
-      "Yes, VerifyMyKyc is designed to scale with your business needs. We offer enterprise plans with bulk verification capabilities, team management features,custom integrations, and 24/7 priority support. Our platform can handle millions of verifications per month with 99.9% uptime guarantee.",
+      "Yes, Verify E-KYC is designed to scale with business needs. We provide bulk e-KYC verification, enterprise API integration, team management, and 24/7 priority support. Our system can handle millions of verifications per month with 99.9% uptime. Many enterprises searching 'best e-KYC verification service provider' choose our platform for reliability and compliance.",
     popular: false,
   },
   {
     id: 4,
     category: "Account",
-    question: "How do I create a new account?",
+    question: "How do I create a new account for Verify E-KYC?",
     answer:
-      "Creating an account is simple and takes less than 2 minutes. Click the 'Sign Up' button, provide your email and basic business information, verify your email address through the confirmation link we send, and you'll be ready to start verifying documents immediately. No credit card required for the trial period.",
+      "Creating an account for Verify E-KYC takes less than 2 minutes. Click 'Sign Up', enter your email and business details, verify your email address, and start verifying documents instantly. No credit card is required for the trial. For users searching 'how to Verify E-KYC online?', this is the fastest way to get started.",
     popular: true,
   },
   {
     id: 5,
     category: "Pricing",
-    question: "What are your pricing plans?",
+    question: "What are your pricing plans for Verify E-KYC?",
     answer:
-      "We offer flexible pricing plans to suit businesses of all sizes. Our plans start from ₹2 per verification for basic document checks, with volume discounts available. Enterprise customers get custom pricing based on their specific needs, including dedicated support, custom integrations, and SLA guarantees. Contact our sales team for a personalized quote.",
+      "We offer flexible e-KYC verification pricing to suit startups and enterprises. Plans start from ₹15-20 per verification for basic checks, with discounts for higher volumes. Enterprise customers get custom pricing, SLA-backed performance, and dedicated support. If you searched 'What is the cost of e-KYC verification service?', our team can provide a personalized quote.",
     popular: false,
   },
   {
     id: 6,
     category: "Integration",
-    question: "How easy is it to use VerifyMyKyc ?",
+    question: "How easy is it to integrate Verify E-KYC?",
     answer:
-      "Our REST is designed for developers and can be integrated in minutes. We provide comprehensive documentation, SDKs for popular programming languages (Python, Node.js, PHP, Java), code examples, and sandbox environment for testing. Most integrations are completed within a few hours, and our technical support team is available to assist you.",
+      "Our REST API is developer-friendly and can be integrated in minutes. We provide SDKs for Python, Node.js, PHP, and Java, along with full documentation and sandbox testing. Most integrations finish within a few hours. For developers asking 'How to integrate e-KYC API into my app?', Verify E-KYC offers the easiest solution.",
     popular: false,
   },
   {
     id: 7,
     category: "Support",
-    question: "What kind of support do you provide?",
+    question: "What kind of support does Verify E-KYC provide?",
     answer:
-      "We provide multiple support channels including 24/7 live chat, email support, phone support for enterprise customers, comprehensive documentation, video tutorials, and a community forum. Our average response time is under 2 hours, and we offer dedicated account managers for enterprise clients.",
+      "We provide 24/7 live chat, email, and enterprise phone support. In addition, our documentation, tutorials, and community forum help users get answers quickly. Our average response time is under 2 hours. If you're searching 'Does e-KYC service provide customer support?', the answer is yes — with dedicated account managers for enterprise users.",
     popular: false,
   },
   {
     id: 8,
     category: "Compliance",
-    question: "Are you compliant with regulatory requirements?",
+    question: "Is Verify E-KYC compliant with regulations?",
     answer:
-      "Yes, we maintain compliance with major regulatory frameworks including KYC/AML regulations, GDPR, CCPA, PCI DSS, and local data protection laws. We regularly undergo third-party security audits and maintain certifications like ISO 27001 and SOC 2 Type II. We also provide compliance reports and audit trails for your regulatory needs.",
+      "Yes, Verify E-KYC complies with KYC/AML guidelines, GDPR, PCI DSS, CCPA, and Indian data protection laws. We maintain certifications like ISO 27001 and SOC 2 Type II, and undergo regular security audits. For businesses asking 'Is online e-KYC verification RBI compliant?', the answer is yes — we provide audit trails and compliance reports for regulators.",
     popular: false,
   },
-]
+];
+
 const categories = ["All", ...Array.from(new Set(faqData.map((faq) => faq.category)))]
 
 const FAQItem = ({
@@ -93,7 +94,7 @@ const FAQItem = ({
   }
 
   return (
-    <div className="group overflow-hidden border border-gray-200 hover:border-blue-500/30 transition-all duration-300 hover:shadow-lg bg-white rounded-lg">
+    <div className="group overflow-hidden border border-gray-200 hover:border-gray-500/30 transition-all duration-300 hover:shadow-lg bg-white rounded-lg">
       <div className="p-0">
         <button
           onClick={onToggle}
@@ -103,27 +104,27 @@ const FAQItem = ({
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-3 mb-2">
                 {faq.popular && (
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-600 border border-blue-500/20">
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-500/10 text-gray-600 border border-gray-500/20">
                     Popular
                   </span>
                 )}
                 <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">{faq.category}</span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-200 pr-4">
+              <h3 className="text-lg font-semibold text-gray-900 group-hover:text-gray-600 transition-colors duration-200 pr-4">
                 {highlightText(faq.question, searchTerm)}
               </h3>
             </div>
             <div
               className={`
                 flex-shrink-0 w-8 h-8 rounded-full border-2 border-gray-200 flex items-center justify-center
-                transition-all duration-300 group-hover:border-blue-500 group-hover:bg-blue-500/10
-                ${isOpen ? "border-blue-500 bg-blue-500/10 rotate-180" : ""}
+                transition-all duration-300 group-hover:border-gray-500 group-hover:bg-gray-500/10
+                ${isOpen ? "border-gray-500 bg-gray-500/10 rotate-180" : ""}
               `}
             >
               {isOpen ? (
-                <Minus className="w-4 h-4 text-blue-600" />
+                <Minus className="w-4 h-4 text-gray-600" />
               ) : (
-                <Plus className="w-4 h-4 text-gray-600 group-hover:text-blue-600" />
+                <Plus className="w-4 h-4 text-gray-600 group-hover:text-gray-600" />
               )}
             </div>
           </div>
@@ -176,7 +177,7 @@ export default function FAQSection() {
             <div className="space-y-8">
               {/* Header */}
               <div>
-                <div className="inline-flex items-center gap-2 bg-blue-500/10 text-blue-600 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                <div className="inline-flex items-center gap-2 bg-gray-500/10 text-gray-600 px-4 py-2 rounded-full text-sm font-semibold mb-6">
                   <HelpCircle className="w-4 h-4" />
                   Support Center
                 </div>
@@ -184,11 +185,11 @@ export default function FAQSection() {
                 <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Frequently asked Questions</h2>
 
                 <p className="text-xl text-gray-600 leading-relaxed mb-8">
-                  Most questions and concerns about VerifyMyKyc can be found here. Our platform has become the most
+                  Most questions and concerns about Verify E-KYC can be found here. Our platform has become the most
                   popular and trusted verification solution. Check out some answers you're looking for.
                 </p>
 
-                {/* <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105">
+                {/* <button className="bg-gray-600 hover:bg-gray-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105">
                   <span className="flex items-center gap-2">
                     View All Documentation
                     <ChevronRight className="w-4 h-4" />
@@ -199,11 +200,11 @@ export default function FAQSection() {
               {/* Quick Stats */}
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
-                  <div className="text-3xl font-bold text-blue-600 mb-2">24/7</div>
+                  <div className="text-3xl font-bold text-gray-600 mb-2">24/7</div>
                   <div className="text-gray-600 text-sm font-medium">Support Available</div>
                 </div>
                 <div className="text-center p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
-                  <div className="text-3xl font-bold text-blue-600 mb-2">2min</div>
+                  <div className="text-3xl font-bold text-gray-600 mb-2">2min</div>
                   <div className="text-gray-600 text-sm font-medium">Avg Response Time</div>
                 </div>
               </div>
@@ -212,15 +213,15 @@ export default function FAQSection() {
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Still need help?</h3>
                 <div className="space-y-3">
-                  {/* <button className="w-full justify-start bg-white hover:bg-gray-50 border border-gray-200 hover:border-blue-500/30 text-gray-700 hover:text-blue-600 transition-all duration-200 px-4 py-3 rounded-lg flex items-center">
+                  {/* <button className="w-full justify-start bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-500/30 text-gray-700 hover:text-gray-600 transition-all duration-200 px-4 py-3 rounded-lg flex items-center">
                     <MessageCircle className="w-4 h-4 mr-3" />
                     Start Live Chat
                   </button> */}
-                  <button onClick={()=>navigate("/contact-us")} className="w-full justify-start bg-white hover:bg-gray-50 border border-gray-200 hover:border-blue-500/30 text-gray-700 hover:text-blue-600 transition-all duration-200 px-4 py-3 rounded-lg flex items-center">
+                  <button onClick={()=>navigate("/contact-us")} className="w-full justify-start bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-500/30 text-gray-700 hover:text-gray-600 transition-all duration-200 px-4 py-3 rounded-lg flex items-center">
                     <Contact className="w-4 h-4 mr-3" />
                     Contact us
                   </button>
-                  {/* <button className="w-full justify-start bg-white hover:bg-gray-50 border border-gray-200 hover:border-blue-500/30 text-gray-700 hover:text-blue-600 transition-all duration-200 px-4 py-3 rounded-lg flex items-center">
+                  {/* <button className="w-full justify-start bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-500/30 text-gray-700 hover:text-gray-600 transition-all duration-200 px-4 py-3 rounded-lg flex items-center">
                     <Phone className="w-4 h-4 mr-3" />
                     Schedule Call
                   </button> */}
@@ -242,7 +243,7 @@ export default function FAQSection() {
                     placeholder="Search frequently asked questions..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-12 h-12 w-full bg-white border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 rounded-xl shadow-sm outline-none"
+                    className="pl-12 h-12 w-full bg-white border border-gray-200 focus:border-gray-500 focus:ring-2 focus:ring-gray-500/20 rounded-xl shadow-sm outline-none"
                   />
                 </div>
 
@@ -256,8 +257,8 @@ export default function FAQSection() {
                         px-4 py-2 rounded-full transition-all duration-200 text-sm font-medium
                         ${
                           selectedCategory === category
-                            ? "bg-blue-600 hover:bg-blue-700 text-white shadow-md"
-                            : "bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 hover:border-blue-500/30"
+                            ? "bg-gray-600 hover:bg-gray-700 text-white shadow-md"
+                            : "bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 hover:border-gray-500/30"
                         }
                       `}
                     >
@@ -271,7 +272,7 @@ export default function FAQSection() {
               {searchTerm === "" && selectedCategory === "All" && (
                 <div className="mb-8">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
+                    <span className="w-2 h-2 bg-gray-600 rounded-full"></span>
                     Most Popular Questions
                   </h3>
                   <div className="space-y-4">

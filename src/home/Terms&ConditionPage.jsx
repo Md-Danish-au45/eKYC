@@ -27,7 +27,7 @@ export default function TermsAndConditionsPage() {
   const sections = [
     {
       id: "acknowledgment",
-      title: "Acknowledgment",
+      title: "1. Acknowledgment",
       icon: <FileText className="w-5 h-5" />,
       content: (
         <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -51,7 +51,7 @@ export default function TermsAndConditionsPage() {
     },
     {
       id: "definitions",
-      title: "Interpretation and Definitions",
+      title: "2. Interpretation and Definitions",
       icon: <FileText className="w-5 h-5" />,
       content: (
         <div className="space-y-6">
@@ -78,7 +78,7 @@ export default function TermsAndConditionsPage() {
                 {
                   term: "Company",
                   definition:
-                    '(referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Navigant Digital Private Limited, A 24/5, Mohan Cooperative Industrial Area Badarpur, Second Floor, New Delhi 110044 India.',
+                    '(referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Bringmark Private Limited, A 24/5, Mohan Cooperative Industrial Area Badarpur, Second Floor, New Delhi 110044 India.',
                 },
                 {
                   term: "Device",
@@ -101,7 +101,7 @@ export default function TermsAndConditionsPage() {
                 },
                 {
                   term: "Website",
-                  definition: "refers to Verify My KYC, accessible from https://verifymykyc.com/",
+                  definition: "refers to Verify E-KYC, accessible from https://Verifyekyc.com/",
                 },
                 {
                   term: "You",
@@ -121,7 +121,7 @@ export default function TermsAndConditionsPage() {
     },
     {
       id: "links",
-      title: "Links to Other Websites",
+      title: "3. Links to Other Websites",
       icon: <LinkIcon className="w-5 h-5" />,
       content: (
         <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -139,7 +139,7 @@ export default function TermsAndConditionsPage() {
     },
     {
       id: "termination",
-      title: "Termination",
+      title: "4. Termination",
       icon: <AlertTriangle className="w-5 h-5" />,
       content: (
         <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -152,7 +152,7 @@ export default function TermsAndConditionsPage() {
     },
     {
       id: "liability",
-      title: "Limitation of Liability",
+      title: "5. Limitation of Liability",
       icon: <Scale className="w-5 h-5" />,
       content: (
         <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -170,7 +170,7 @@ export default function TermsAndConditionsPage() {
     },
     {
       id: "disclaimer",
-      title: '"AS IS" and "AS AVAILABLE" Disclaimer',
+      title: '6. "AS IS" and "AS AVAILABLE" Disclaimer',
       icon: <FileWarning className="w-5 h-5" />,
       content: (
         <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -188,7 +188,7 @@ export default function TermsAndConditionsPage() {
     },
     {
         id: "governing-law",
-        title: "Governing Law",
+        title: "7. Governing Law",
         icon: <Flag className="w-5 h-5" />,
         content: (
             <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -200,7 +200,7 @@ export default function TermsAndConditionsPage() {
     },
     {
         id: "disputes-resolution",
-        title: "Disputes Resolution",
+        title: "8. Disputes Resolution",
         icon: <Smile className="w-5 h-5" />,
         content: (
             <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -212,7 +212,7 @@ export default function TermsAndConditionsPage() {
     },
     {
         id: "eu-users",
-        title: "For European Union (EU) Users",
+        title: "9. For European Union (EU) Users",
         icon: <Globe className="w-5 h-5" />,
         content: (
             <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -224,7 +224,7 @@ export default function TermsAndConditionsPage() {
     },
     {
         id: "severability-waiver",
-        title: "Severability and Waiver",
+        title: "10. Severability and Waiver",
         icon: <FileText className="w-5 h-5" />,
         content: (
             <div className="space-y-6">
@@ -245,7 +245,7 @@ export default function TermsAndConditionsPage() {
     },
     {
         id: "translation-interpretation",
-        title: "Translation Interpretation",
+        title: "11. Translation Interpretation",
         icon: <Globe className="w-5 h-5" />,
         content: (
             <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -257,7 +257,7 @@ export default function TermsAndConditionsPage() {
     },
     {
       id: "changes",
-      title: "Changes to These Terms and Conditions",
+      title: "12. Changes to These Terms and Conditions",
       icon: <RefreshCw className="w-5 h-5" />,
       content: (
         <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -270,11 +270,27 @@ export default function TermsAndConditionsPage() {
         </div>
       ),
     },
-  ]
+    {
+      id: "contact",
+      title: "13. Contact Us",
+      icon: <Mail className="w-5 h-5" />,
+      content: (
+        <div className="space-y-4 text-gray-700 leading-relaxed">
+          <p>
+            If you have any questions about these Terms and Conditions, You can contact us:
+          </p>
+          <ul className="list-disc list-inside space-y-2">
+            <li>By email: <a href="mailto:Support@Verifyekyc.com" className="text-gray-600 hover:underline">Support@Verifyekyc.com</a></li>
+            <li>By visiting our contact page: <a href="/contact-us" className="text-gray-600 hover:underline" onClick={(e) => { e.preventDefault(); navigate("/contact-us"); }}>https://Verifyekyc.com/contact-us</a></li>
+          </ul>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-white">
-      <TopBar/>
+      <TopBar />
       <HomePageHeader />
       <div className="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-16">
         <div className="max-w-4xl mx-auto px-6">
@@ -313,7 +329,7 @@ export default function TermsAndConditionsPage() {
               <Card className="shadow-lg border border-gray-200 overflow-hidden">
                 <button
                   onClick={() => toggleSection(section.id)}
-                  className="w-full p-6 text-left hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset"
+                  className="w-full p-6 text-left hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-inset"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
@@ -365,20 +381,20 @@ export default function TermsAndConditionsPage() {
                   If you have any questions about these Terms and Conditions, You can contact us:
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                    <a
-                        href="mailto:Support@Verifymykyc.com"
-                        className="inline-flex items-center px-6 py-3 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-900 transition-colors duration-200 shadow-md hover:shadow-lg"
-                    >
-                        <Mail className="w-5 h-5 mr-2" />
-                        Support@Verifymykyc.com
-                    </a>
-                    <div
-                        onClick={() => navigate("/contact-us")}
-                        className="inline-flex items-center px-6 py-3 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-900 transition-colors duration-200 shadow-md hover:shadow-lg cursor-pointer"
-                    >
-                        <Globe className="w-5 h-5 mr-2" />
-                        Visit Contact Page
-                    </div>
+                  <a
+                    href="mailto:Support@Verifyekyc.com"
+                    className="inline-flex items-center px-6 py-3 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-900 transition-colors duration-200 shadow-md hover:shadow-lg"
+                  >
+                    <Mail className="w-5 h-5 mr-2" />
+                    Support@Verifyekyc.com
+                  </a>
+                  <div
+                    onClick={() => navigate("/contact-us")}
+                    className="inline-flex items-center px-6 py-3 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-900 transition-colors duration-200 shadow-md hover:shadow-lg cursor-pointer"
+                  >
+                    <Globe className="w-5 h-5 mr-2" />
+                    Visit Contact Page
+                  </div>
                 </div>
               </div>
             </CardContent>

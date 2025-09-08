@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import { useState, useEffect, useRef } from "react"
@@ -9,11 +7,11 @@ import { useNavigate } from "react-router-dom"
 import AppLogo from "@/assets/sidebarLogo.svg"
 import { useGetServicesQuery } from "@/app/api/serviceApiSlice"
 import { selectCurrentUser } from "../../features/auth/authSlice"
-import { useSelector } from "react-redux"
-import VerifyMyKyc from "@/assets/VerifyMyKyc.svg"
-import {  useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import VerifyMyKyc from "@/assets/logo.png"
 import { logOut } from "@/features/auth/authSlice"
-// Navigation items with Products shown first
+
+// Static navigation items
 const staticNavItems = [
   {
     name: "Products",
@@ -31,7 +29,7 @@ const staticNavItems = [
     hasDropdown: true,
     items: [
       { name: "Case Studies", href: "/case-study", description: "Customer success stories" },
-      { name: "Blog", href: "/blog", description: "Industry insights and updates" },
+      { name: "Blog", "href": "/blog", description: "Industry insights and updates" },
     ],
   },
   {
@@ -51,104 +49,130 @@ export default function Header() {
   const [hoveredCategory, setHoveredCategory] = useState(null)
   const [processedProducts, setProcessedProducts] = useState(null)
   const [navigationItems, setNavigationItems] = useState(staticNavItems)
-  const [activeMobileCategory, setActiveMobileCategory] = useState(null)
+  const [activeMobileDropdown, setActiveMobileDropdown] = useState(null)
   const [submenuOffset, setSubmenuOffset] = useState(0)
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+  const [activeMobileSubDropdown, setActiveMobileSubDropdown] = useState(null);
 
   const user = useSelector(selectCurrentUser)
   const dispatch = useDispatch()
 
   const categoryRefs = useRef({})
   const leftPaneRef = useRef(null)
+  const dropdownTimeoutRef = useRef(null);
 
   const navigate = useNavigate()
   const { data: servicesData } = useGetServicesQuery()
 
-  // Process services data to group by category
-// Process services data to group by category
-useEffect(() => {
-  if (servicesData && Array.isArray(servicesData.data)) {
-    let groupedServices = servicesData.data.reduce((acc, service) => {
-      if (service.category && typeof service.category === "string" && service.category.trim()) {
-        const category = service.category.trim();
-        if (!acc[category]) {
-          acc[category] = [];
+  // Effect to process and set dynamic services data
+  useEffect(() => {
+    if (servicesData && Array.isArray(servicesData.data)) {
+      let groupedServices = servicesData.data.reduce((acc, service) => {
+        if (service.category && typeof service.category === "string" && service.category.trim()) {
+          const category = service.category.trim();
+          if (!acc[category]) {
+            acc[category] = [];
+          }
+          acc[category].push(service);
         }
-        acc[category].push(service);
+        return acc;
+      }, {});
+
+      // Renaming categories as per business logic
+      if (groupedServices["PAN"]) {
+        groupedServices["PAN verification"] = groupedServices["PAN"];
+        delete groupedServices["PAN"];
       }
-      return acc;
-    }, {});
-
-    // Rename categories
-    if (groupedServices["PAN"]) {
-      groupedServices["PAN verification"] = groupedServices["PAN"];
-      delete groupedServices["PAN"];
-    }
-    if (groupedServices["CIN"]) {
-      groupedServices["CIN verification"] = groupedServices["CIN"];
-      delete groupedServices["CIN"];
-    }
-
-    const reordered = {};
-    Object.keys(groupedServices).forEach((key) => {
-      if (key !== "PAN verification" && key !== "CIN verification") {
-        reordered[key] = groupedServices[key];
+      if (groupedServices["CIN"]) {
+        groupedServices["CIN verification"] = groupedServices["CIN"];
+        delete groupedServices["CIN"];
       }
-    });
 
-    if (groupedServices["PAN verification"]) {
-      reordered["PAN verification"] = groupedServices["PAN verification"];
+      // Reordering categories for display
+      const reordered = {};
+      Object.keys(groupedServices).forEach((key) => {
+        if (key !== "PAN verification" && key !== "CIN verification") {
+          reordered[key] = groupedServices[key];
+        }
+      });
+      if (groupedServices["PAN verification"]) {
+        reordered["PAN verification"] = groupedServices["PAN verification"];
+      }
+      if (groupedServices["CIN verification"]) {
+        reordered["CIN verification"] = groupedServices["CIN verification"];
+      }
+
+      // Adding static services to a category
+      if (reordered["Identity Verification"]) {
+        reordered["Identity Verification"].push(
+          { _id: "static-pan", name: "PAN Card Verification" },
+          { _id: "static-aadhar", name: "Aadhar Verification" }
+        );
+      }
+
+      setProcessedProducts(reordered);
+
+      // Add "Products" item to the navigation if not present
+      const dynamicProductItem = {
+        name: "Products",
+        hasDropdown: true,
+      };
+
+      if (!navigationItems.find((item) => item.name === "Products")) {
+        setNavigationItems([dynamicProductItem, ...staticNavItems]);
+      }
     }
-    if (groupedServices["CIN verification"]) {
-      reordered["CIN verification"] = groupedServices["CIN verification"];
-    }
+  }, [servicesData, navigationItems]);
 
-    // ✅ Add Static extra sub-options ONLY under Identity Verification
-    if (reordered["Identity Verification"]) {
-      reordered["Identity Verification"].push(
-        { _id: "static-pan", name: "PAN Card Verification" },
-        { _id: "static-aadhar", name: "Aadhar Verification" }
-      );
-    }
-
-    setProcessedProducts(reordered);
-
-    const dynamicProductItem = {
-      name: "Products",
-      hasDropdown: true,
-    };
-
-    if (!navigationItems.find((item) => item.name === "Products")) {
-      setNavigationItems([dynamicProductItem, ...staticNavItems]);
-    }
-  }
-}, [servicesData, navigationItems]);
-
-
+  // Effect to handle header scroll behavior
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  // Function to toggle the mobile menu and manage body overflow
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+    if (!isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  };
 
+  // Function to handle navigation and close menus
   const handleNavigation = (href) => {
     if (href) navigate(href);
     setActiveDropdown(null);
     setIsMobileMenuOpen(false);
+    document.body.style.overflow = "unset";
   };
 
+  // Desktop dropdown menu handlers
+  const handleDropdownEnter = (dropdownName) => {
+    clearTimeout(dropdownTimeoutRef.current);
+    setActiveDropdown(dropdownName);
+  };
+
+  const handleDropdownLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 100);
+  };
+
+  // Desktop product dropdown handlers
   const handleProductsMouseEnter = () => {
-    setActiveDropdown("Products");
+    handleDropdownEnter("Products");
     setHoveredCategory(null);
   };
 
   const handleProductsMouseLeave = () => {
-    setActiveDropdown(null);
+    handleDropdownLeave();
     setHoveredCategory(null);
   };
 
+  // Handler for hovering over a product category
   const handleCategoryHover = (category) => {
     setHoveredCategory(category);
     const categoryElement = categoryRefs.current[category];
@@ -161,11 +185,16 @@ useEffect(() => {
       setSubmenuOffset(offset);
     }
   };
-    const handleLogout = () => {
+
+  // Logout function
+  const handleLogout = () => {
     dispatch(logOut())
     navigate("/login")
+    setIsMobileMenuOpen(false);
+    document.body.style.overflow = "unset";
   }
 
+  // Navigate to user account based on role
   const navigateToUserAccount = () => {
     if (user) {
       if (user.role === 'admin') {
@@ -176,114 +205,162 @@ useEffect(() => {
     } else {
       navigate("/signup");
     }
-    setIsMobileMenuOpen(false); // Close mobile menu after navigation
+    setIsMobileMenuOpen(false);
+    document.body.style.overflow = "unset";
   };
 
   return (
     <>
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ease-out ${isScrolled ? "bg-white backdrop-blur-lg shadow-lg border-b border-gray-100" : "bg-white border-b-2 border-blue-400"}`}
+        className={`sticky top-0 z-50 transition-all duration-500 ease-out ${
+          isScrolled
+            ? "bg-white/98 backdrop-blur-2xl shadow-xl border-b border-gray-200/60"
+            : "bg-gradient-to-r from-[#75e6da] to-[#75e6da] border-b border-[#189ab4]/20"
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <div className="flex items-center group cursor-pointer" onClick={() => navigate("/")}>
-              <img src={VerifyMyKyc || AppLogo || "/placeholder.svg"} className="w-52 -mx-4 md:w-72 md:-mx-10 h-36 text-white" alt="App Logo" />
-            </div>
+          {/* Logo with Company Name & Slogan */}
+<div
+  className="flex items-center gap-4 cursor-pointer transition-transform duration-300 hover:scale-105"
+  onClick={() => navigate("/")}
+>
+  {/* Logo Image */}
+  <img
+    src={VerifyMyKyc || AppLogo || "/placeholder.svg"}
+    className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
+    alt="App Logo"
+  />
+
+  {/* Company Name & Slogan */}
+  <div className="flex flex-col">
+    <h1 className="text-2xl sm:text-3xl font-bold leading-tight">
+      <span className="text-green-600">Verify</span>{" "}
+      <span className="text-blue-600">E-</span>
+      <span className="text-orange-500">KYC</span>
+    </h1>
+    <p className="text-xs sm:text-sm md:text-base font-medium text-gray-600">
+      Trusted Verification <span className="text-blue-600">For A</span>{" "}
+      <span className="text-orange-500">Digital World</span>
+    </p>
+  </div>
+</div>
+
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex">
-              <ul className="flex items-center space-x-6 relative">
+              <ul className="flex items-center space-x-2 relative">
                 {navigationItems.map((item) => (
                   <li
                     key={item.name}
                     className="relative"
-                    onMouseEnter={
-                      item.hasDropdown && item.name !== "Products" ? () => setActiveDropdown(item.name) : undefined
-                    }
-                    onMouseLeave={
-                      item.hasDropdown && item.name !== "Products" ? () => setActiveDropdown(null) : undefined
-                    }
+                    onMouseEnter={() => handleDropdownEnter(item.name)}
+                    onMouseLeave={() => handleDropdownLeave()}
                   >
                     {item.name === "Products" && processedProducts ? (
-                      <div
-                        className="relative"
-                        onMouseEnter={handleProductsMouseEnter}
-                        onMouseLeave={handleProductsMouseLeave}
-                      >
+                      <div className="relative">
                         <div
-                          className={`bg-transparent hover:bg-gray-50 text-gray-700 hover:text-[#1987BF] font-bold text-base px-5 py-3 rounded-lg transition-all duration-200 border border-transparent hover:border-gray-200 flex items-center gap-1 cursor-pointer ${activeDropdown === item.name ? "bg-gray-50 text-[#1987BF]" : ""} ${isScrolled ? "hover:shadow-sm" : ""}`}
+                          className={`relative px-6 py-3 rounded-lg font-semibold text-base transition-all duration-300 ease-out flex items-center gap-2 cursor-pointer group ${
+                            activeDropdown === item.name
+                              ? "bg-white/95 text-[#1987BF] shadow-lg scale-105"
+                              : isScrolled
+                                ? "text-slate-700 hover:text-[#1987BF] hover:bg-white/80"
+                                : "text-slate-700 hover:text-[#1987BF] hover:bg-white/20"
+                          } ${isScrolled ? "hover:shadow-md" : ""}`}
                         >
-                          {item.name}
+                          <span className="font-medium tracking-wide">{item.name}</span>
                           <ChevronDown
-                            className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === item.name ? "rotate-180" : ""}`}
+                            className={`w-4 h-4 transition-all duration-300 ease-out ${
+                              activeDropdown === item.name ? "rotate-180 text-[#1987BF]" : "text-current"
+                            }`}
                           />
                         </div>
                         {activeDropdown === item.name && (
-                          <div className="absolute top-full left-0 bg-white shadow-xl rounded-xl border border-gray-100 z-50 flex">
-                            <div ref={leftPaneRef} className="w-60 p-4 space-y-1">
-                              {Object.keys(processedProducts).map((category) => (
-                                <button
-                                  key={category}
-                                  ref={(el) => (categoryRefs.current[category] = el)}
-                                  onMouseEnter={() => handleCategoryHover(category)}
-                                  className={`w-full text-left p-3 rounded-lg font-semibold text-sm transition-colors duration-200 whitespace-nowrap ${hoveredCategory === category ? "bg-blue-50 text-[#1987BF]" : "text-gray-800 hover:bg-gray-50"}`}
-                                >
-                                  {category}
-                                </button>
-                              ))}
-                            </div>
-                            {hoveredCategory && (
-                              <div
-                                className="border-l border-gray-100 min-w-64 p-2 absolute left-60 bg-white shadow-lg rounded-r-xl"
-                                style={{ top: `${submenuOffset}px` }}
-                              >
-                                <div className="space-y-1">
-                           {processedProducts[hoveredCategory]?.map((service) => (
-  service._id === "static-pan" || service._id === "static-aadhar" ? (
-    <div
-      key={service._id}
-      className="block p-3 rounded-lg bg-gray-50 text-gray-400 cursor-not-allowed"
-    >
-      <div className="font-semibold text-sm whitespace-nowrap">
-        {service.name}
-      </div>
-    </div>
-  ) : (
-    <a
-      key={service._id}
-      href={`/product/${service._id}`}
-      onClick={(e) => {
-        e.preventDefault()
-        handleNavigation(`/product/${service._id}`)
-      }}
-      className="block p-3 rounded-lg bg-white hover:bg-gray-50 transition-colors duration-200 group cursor-pointer"
-    >
-      <div className="font-semibold text-gray-800 group-hover:text-[#1987BF] transition-colors duration-200 text-sm whitespace-nowrap">
-        {service.name}
-      </div>
-    </a>
-  )
-))}
-
+                            <div
+                                className="absolute top-full left-0 mt-2 bg-white/98 shadow-2xl rounded-2xl border z-50 flex"
+                                onMouseEnter={() => clearTimeout(dropdownTimeoutRef.current)}
+                                onMouseLeave={() => handleDropdownLeave()}
+                            >
+                                <div ref={leftPaneRef} className="w-64 p-6 bg-gradient-to-b from-slate-50/50 to-white border-r border-gray-200/30">
+                                    <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 px-3">Categories</h3>
+                                    <div className="space-y-1">
+                                        {Object.keys(processedProducts).map((category) => (
+                                            <div key={category}>
+                                                <button
+                                                    onMouseEnter={() => handleCategoryHover(category)}
+                                                    ref={(el) => (categoryRefs.current[category] = el)}
+                                                    className="flex items-center justify-between w-full text-left font-medium text-lg text-slate-700 hover:text-[#1987BF] transition-colors duration-200 py-3 px-3 rounded-lg hover:bg-slate-50/50"
+                                                >
+                                                    <span className="tracking-wide">{category}</span>
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
-                              </div>
-                            )}
-                          </div>
+                                {hoveredCategory && processedProducts[hoveredCategory] && (
+                                    <div
+                                        className="min-w-72 p-6 absolute left-full bg-white/98 backdrop-blur-xl shadow-xl rounded-l-2xl border-r border-gray-200/30 transition-all duration-300 ease-out animate-in slide-in-from-left-1"
+                                        style={{ top: `${submenuOffset}px` }}
+                                    >
+                                        <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">{hoveredCategory}</h4>
+                                        <div className="space-y-2">
+                                            {processedProducts[hoveredCategory].map((service) => (
+                                                service._id === "static-pan" || service._id === "static-aadhar" ? (
+                                                    <div
+                                                        key={service._id}
+                                                        className="p-3 rounded-xl bg-slate-50/50 border border-slate-200/50 text-slate-400 cursor-not-allowed"
+                                                    >
+                                                        <div className="font-medium text-sm">
+                                                            {service.name}
+                                                        </div>
+                                                        <div className="text-xs text-slate-400 mt-1">Coming Soon</div>
+                                                    </div>
+                                                ) : (
+                                                    <a
+                                                        key={service._id}
+                                                        href={`/product/${service._id}`}
+                                                        onClick={(e) => {
+                                                            e.preventDefault()
+                                                            handleNavigation(`/product/${service._id}`)
+                                                        }}
+                                                        className="block p-3 rounded-xl hover:bg-gradient-to-r hover:from-[#1987BF]/5 hover:to-blue-50/50 transition-all duration-200 ease-out group cursor-pointer border border-transparent hover:border-[#1987BF]/20 hover:shadow-sm"
+                                                    >
+                                                        <div className="font-medium text-slate-800 group-hover:text-[#1987BF] transition-colors duration-200 text-sm">
+                                                            {service.name}
+                                                        </div>
+                                                        <div className="text-xs text-slate-500 group-hover:text-[#1987BF]/70 transition-colors duration-200 mt-1">
+                                                            Verify instantly
+                                                        </div>
+                                                    </a>
+                                                )
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         )}
                       </div>
                     ) : item.hasDropdown ? (
                       <div className="relative">
                         <div
-                          className={`bg-transparent hover:bg-gray-50 text-gray-700 hover:text-[#1987BF] font-bold text-base px-5 py-3 rounded-lg transition-all duration-200 border border-transparent hover:border-gray-200 flex items-center gap-1 cursor-pointer ${activeDropdown === item.name ? "bg-gray-50 text-[#1987BF]" : ""} ${isScrolled ? "hover:shadow-sm" : ""}`}
+                          className={`relative px-6 py-3 rounded-lg font-semibold text-base transition-all duration-300 ease-out flex items-center gap-2 cursor-pointer group ${
+                            activeDropdown === item.name
+                              ? "bg-white/95 text-[#1987BF] shadow-lg scale-105"
+                              : isScrolled
+                                ? "text-slate-700 hover:text-[#1987BF] hover:bg-white/80"
+                                : "text-slate-700 hover:text-[#1987BF] hover:bg-white/20"
+                          } ${isScrolled ? "hover:shadow-md" : ""}`}
                         >
-                          {item.name}
+                          <span className="font-medium tracking-wide">{item.name}</span>
                           <ChevronDown
-                            className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === item.name ? "rotate-180" : ""}`}
+                            className={`w-4 h-4 transition-all duration-300 ease-out ${
+                              activeDropdown === item.name ? "rotate-180 text-[#1987BF]" : "text-current"
+                            }`}
                           />
                         </div>
                         {activeDropdown === item.name && (
-                          <div className="absolute top-full left-0 min-w-full bg-white shadow-xl rounded-xl border border-gray-100 py-3 px-3 z-50">
+                          <div className="absolute top-full left-0 mt-2 min-w-64 bg-white/98 backdrop-blur-xl shadow-2xl rounded-2xl border border-gray-200/50 py-4 px-4 z-50 transition-all duration-300 ease-out transform animate-in slide-in-from-top-1">
                             <div className="space-y-1">
                               {item.items?.map((subItem) => (
                                 <a
@@ -293,10 +370,13 @@ useEffect(() => {
                                     e.preventDefault()
                                     handleNavigation(subItem.href)
                                   }}
-                                  className="block p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 group cursor-pointer"
+                                  className="block p-4 rounded-xl hover:bg-gradient-to-r hover:from-[#1987BF]/5 hover:to-blue-50/50 transition-all duration-200 ease-out group cursor-pointer border border-transparent hover:border-[#1987BF]/20 hover:shadow-sm"
                                 >
-                                  <div className="font-semibold text-gray-800 group-hover:text-[#1987BF] transition-colors duration-200 text-sm whitespace-nowrap">
+                                  <div className="font-medium text-slate-800 group-hover:text-[#1987BF] transition-colors duration-200 text-sm">
                                     {subItem.name}
+                                  </div>
+                                  <div className="text-xs text-slate-500 group-hover:text-[#1987BF]/70 transition-colors duration-200 mt-1">
+                                    {subItem.description}
                                   </div>
                                 </a>
                               ))}
@@ -310,9 +390,13 @@ useEffect(() => {
                           e.preventDefault()
                           navigate(item.href)
                         }}
-                        className={`bg-transparent font-bold hover:bg-gray-50 text-gray-700 hover:text-[#1987BF] text-base px-5 py-3 rounded-lg transition-all duration-200 border border-transparent hover:border-gray-200 ${isScrolled ? "hover:shadow-sm" : ""}`}
+                        className={`relative px-6 py-3 rounded-lg font-medium text-base transition-all duration-300 ease-out ${
+                          isScrolled
+                            ? "text-slate-700 hover:text-[#1987BF] hover:bg-white/80 hover:shadow-md"
+                            : "text-slate-700 hover:text-[#1987BF] hover:bg-white/20"
+                        }`}
                       >
-                        {item.name}
+                        <span className="tracking-wide">{item.name}</span>
                       </button>
                     )}
                   </li>
@@ -323,194 +407,224 @@ useEffect(() => {
             {/* Right Side Actions */}
             <div className="flex items-center">
               {user ? (
-              <div
-  className="hidden lg:block relative"
-  onMouseEnter={() => setIsAccountMenuOpen(true)}
-  onMouseLeave={() => setIsAccountMenuOpen(false)}
->
-  <Button
-    variant="ghost"
-    className="flex items-center text-gray-700 hover:text-[#1987BF] border border-gray-300 rounded-full font-bold px-4 bg-white shadow-sm transition duration-200"
-  >
-    <User className="w-5 h-5 mr-1 text-gray-600" />
-    Account
-    <ChevronDown
-      className={`w-4 h-4 transition-transform ${
-        isAccountMenuOpen ? "rotate-180" : ""
-      }`}
-    />
-  </Button>
+                <div
+                  className="hidden lg:block relative"
+                  onMouseEnter={() => setIsAccountMenuOpen(true)}
+                  onMouseLeave={() => setIsAccountMenuOpen(false)}
+                >
+                  <Button
+                    variant="ghost"
+                    className="flex items-center text-slate-700 hover:text-[#1987BF] border-2 border-slate-200 hover:border-[#1987BF]/30 rounded-xl font-semibold px-5 py-2.5 bg-white/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 ease-out hover:scale-105"
+                  >
+                    <User className="w-5 h-5 mr-2 text-slate-600" />
+                    <span className="font-medium tracking-wide">Account</span>
+                    <ChevronDown
+                      className={`w-4 h-4 ml-1 transition-transform duration-300 ${isAccountMenuOpen ? "rotate-180" : ""}`}
+                    />
+                  </Button>
 
-  {isAccountMenuOpen && (
-    <div className="absolute top-full right-0 w-40 bg-white border border-gray-100 shadow-lg rounded-md z-50 rounded-md">
-      <button
-        onClick={() => {
-          if (user.role === "admin") {
-            navigate("/admin");
-          } else {
-            navigate("/user");
-          }
-        }}
-        className="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
-      >
-        Go to Account
-      </button>
-      <button
-        onClick={handleLogout}
-        className="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
-      >
-        Log Out
-      </button>
-    </div>
-  )}
-</div>
+                  {isAccountMenuOpen && (
+                    <div className="absolute top-full right-0 mt-2 w-48 bg-white/98 backdrop-blur-xl border-2 border-gray-200/50 shadow-2xl rounded-xl z-50 overflow-hidden transition-all duration-300 ease-out transform animate-in slide-in-from-top-1">
+                      <button
+                        onClick={() => {
+                          if (user.role === "admin") {
+                            navigate("/admin");
+                          } else {
+                            navigate("/user");
+                          }
+                          setIsAccountMenuOpen(false);
+                        }}
+                        className="block w-full text-left px-5 py-4 text-sm font-medium text-slate-700 hover:bg-gradient-to-r hover:from-[#1987BF]/5 hover:to-blue-50/50 hover:text-[#1987BF] transition-all duration-200"
+                      >
+                        Go to Account
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          setIsAccountMenuOpen(false);
+                        }}
+                        className="block w-full text-left px-5 py-4 text-sm font-medium text-slate-700 hover:bg-gradient-to-r hover:from-red-50 hover:to-red-50/50 hover:text-red-600 transition-all duration-200"
+                      >
+                        Log Out
+                      </button>
+                    </div>
+                  )}
+                </div>
               ) : (
                 <div className="hidden lg:block">
                   <Button
-                    className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold px-7 py-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center gap-2 text-[1.1rem]"
+                    className="bg-gray-900 hover:from-red-600 hover:to-red-700 text-white font-semibold px-8 py-3 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center gap-3 text-base border-0"
                     type="button"
                     onClick={() => navigate("/signup")}
                   >
-                    Get Started
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform duration-200" />
+                    <span className="font-medium tracking-wide">Get Started</span>
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform duration-300" />
                   </Button>
                 </div>
               )}
               <Button
                 variant="ghost"
                 size="sm"
-                className="lg:hidden h-12 w-12 p-0 hover:bg-gray-100 rounded-lg"
+                className="lg:hidden h-12 w-12 p-0 hover:bg-white/20 rounded-xl transition-all duration-200"
                 onClick={toggleMobileMenu}
               >
                 {isMobileMenuOpen ? (
-                  <X size={24} className="text-gray-600" />
+                  <X size={24} className="text-slate-600" />
                 ) : (
-                  <Menu size={24} className="text-gray-600" />
+                  <Menu size={24} className="text-slate-600" />
                 )}
               </Button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu Overlay */}
         <div
-          className={`lg:hidden overflow-hidden transition-all duration-300 ease-out bg-white border-t border-gray-100 px-4 ${isMobileMenuOpen ? "max-h-[80vh] opacity-100 overflow-y-auto" : "max-h-0 opacity-0"}`}
-        >
-          <div className="px-4 py-8 space-y-5 max-w-7xl mx-auto">
-            {navigationItems.map((item) => (
-              <div key={item.name} className="space-y-3">
-                {item.name === "Products" && processedProducts ? (
-                  <div>
-                    <button
-                      onClick={() => setActiveDropdown(activeDropdown === item.name ? null : item.name)}
-                      className="flex items-center justify-between w-full text-left font-semibold text-xl text-gray-900 hover:text-[#1987BF] transition-colors duration-200 py-3"
-                    >
-                      {item.name}
-                      <ChevronDown
-                        className={`w-6 h-6 transition-transform duration-200 ${activeDropdown === item.name ? "rotate-180" : ""}`}
-                      />
-                    </button>
-                    <div
-                      className={`overflow-hidden transition-all duration-500 ease-in-out ${activeDropdown === item.name ? "max-h-[1000px]" : "max-h-0"}`}
-                    >
-                      <div className="pl-4 space-y-2 pt-3">
-                        {Object.keys(processedProducts).map((category) => (
-                          <div key={category}>
-                            <button
-                              onClick={() =>
-                                setActiveMobileCategory(activeMobileCategory === category ? null : category)
-                              }
-                              className="flex items-center justify-between w-full text-left font-semibold text-lg text-gray-700 hover:text-[#1987BF] transition-colors duration-200 py-2"
-                            >
-                              {category}
-                              <ChevronDown
-                                className={`w-5 h-5 transition-transform duration-200 ${activeMobileCategory === category ? "rotate-180" : ""}`}
-                              />
-                            </button>
-                            <div
-                              className={`overflow-hidden transition-all duration-300 ease-out ${activeMobileCategory === category ? "max-h-96" : "max-h-0"}`}
-                            >
-                              <div className="pl-4 space-y-3 pt-2">
-                               {processedProducts[category].map((service) => (
-  service._id === "static-pan" || service._id === "static-aadhar" ? (
-    <div
-      key={service._id}
-      className="block py-2 text-md text-gray-400 cursor-not-allowed"
-    >
-      {service.name}
-    </div>
-  ) : (
-    <a
-      key={service._id}
-      href={`/product/${service._id}`}
-      onClick={(e) => {
-        e.preventDefault()
-        handleNavigation(`/product/${service._id}`)
-      }}
-      className="block py-2 text-md text-gray-600 hover:text-[#1987BF] transition-colors duration-200 cursor-pointer"
-    >
-      {service.name}
-    </a>
-  )
-))}
+          onClick={toggleMobileMenu}
+          className={`fixed inset-0 z-40 bg-[#75e6da]  transition-opacity duration-500 lg:hidden ${
+            isMobileMenuOpen ? "opacity-100 bg-black/60 backdrop-blur-sm" : "opacity-0 pointer-events-none"
+          }`}
+        ></div>
 
+        {/* Mobile Menu - MODIFIED FOR RIGHT-TO-LEFT SLIDE */}
+        <div
+          className={`fixed top-0 right-0 h-full w-70 bg-[#75e6da] backdrop-blur-2xl z-50 shadow-2xl transition-transform duration-500 ease-in-out lg:hidden ${
+            isMobileMenuOpen ? "transform translate-x-0" : "transform translate-x-full"
+          }`}
+        >
+          <div className="px-6 py-8 space-y-6 h-full overflow-y-auto">
+            {/* Logo and close button inside the menu */}
+            <div className="flex items-center justify-between ">
+                <div className="flex items-center group cursor-pointer " onClick={() => handleNavigation("/")}>
+                  {/* <img src={VerifyMyKyc || AppLogo || "/placeholder.svg"} className="w-40 h-auto" alt="App Logo" /> */}
+<h4 class="text-3xl font-bold flex items-center gap-1">
+  <span class="text-green-600">Verify</span>
+  <span class="text-blue-600">e-</span>
+  <span class="text-orange-500">kyc</span>
+</h4>
+                </div>
+                <Button variant="ghost" size="sm" className="h-10 w-10 p-0 hover:bg-gray-100 rounded-xl transition-all duration-200" onClick={toggleMobileMenu}>
+                    <X size={24} className="text-slate-600" />
+                </Button>
+            </div>
+
+            {/* Mobile Navigation */}
+            <div className="space-y-4 pt-4">
+              {navigationItems.map((item) => (
+                <div key={item.name} className="space-y-3">
+                  {item.name === "Products" && processedProducts ? (
+                    <div>
+                      <button
+                        onClick={() => setActiveMobileDropdown(activeMobileDropdown === item.name ? null : item.name)}
+                        className="flex items-center justify-between w-full text-left font-semibold text-xl text-slate-800 hover:text-[#1987BF] transition-colors duration-300 py-4 px-2 rounded-lg hover:bg-slate-50/50"
+                      >
+                        <span className="tracking-wide">{item.name}</span>
+                        <ChevronDown
+                          className={`w-6 h-6 transition-transform duration-300 ${activeMobileDropdown === item.name ? "rotate-180 text-[#1987BF]" : ""}`}
+                        />
+                      </button>
+                      <div
+                        className={`overflow-hidden transition-all duration-500 ease-in-out ${activeMobileDropdown === item.name ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}
+                      >
+                        <div className="pl-4 space-y-3 pt-3">
+                          {Object.keys(processedProducts).map((category) => (
+                            <div key={category}>
+                              <button
+                                onClick={() =>
+                                  setActiveMobileSubDropdown(activeMobileSubDropdown === category ? null : category)
+                                }
+                                className="flex items-center justify-between w-full text-left font-medium text-lg text-slate-700 hover:text-[#1987BF] transition-colors duration-200 py-3 px-3 rounded-lg hover:bg-slate-50/50"
+                              >
+                                <span className="tracking-wide">{category}</span>
+                                <ChevronDown
+                                  className={`w-5 h-5 transition-transform duration-300 ${activeMobileSubDropdown === category ? "rotate-180 text-[#1987BF]" : ""}`}
+                                />
+                              </button>
+                              <div
+                                className={`overflow-hidden transition-all duration-400 ease-out ${activeMobileSubDropdown === category ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+                              >
+                                <div className="pl-4 space-y-3 pt-2">
+                                  {processedProducts[category].map((service) => (
+                                    service._id === "static-pan" || service._id === "static-aadhar" ? (
+                                      <div
+                                        key={service._id}
+                                        className="block py-3 px-3 text-base text-slate-400 cursor-not-allowed rounded-lg bg-slate-50/30"
+                                      >
+                                        <div className="font-medium">{service.name}</div>
+                                        <div className="text-xs text-slate-400 mt-1">Coming Soon</div>
+                                      </div>
+                                    ) : (
+                                      <a
+                                        key={service._id}
+                                        href={`/product/${service._id}`}
+                                        onClick={(e) => {
+                                          e.preventDefault()
+                                          handleNavigation(`/product/${service._id}`)
+                                        }}
+                                        className="block py-3 px-3 text-base text-slate-600 hover:text-[#1987BF] hover:bg-slate-50/50 transition-all duration-200 cursor-pointer rounded-lg font-medium"
+                                      >
+                                        {service.name}
+                                      </a>
+                                    )
+                                  ))}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ) : item.hasDropdown ? (
-                  <div>
+                  ) : item.hasDropdown ? (
+                    <div>
+                      <button
+                        onClick={() => setActiveMobileDropdown(activeMobileDropdown === item.name ? null : item.name)}
+                        className="flex items-center justify-between w-full text-left font-semibold text-xl text-slate-800 hover:text-[#1987BF] transition-colors duration-300 py-4 px-2 rounded-lg hover:bg-slate-50/50"
+                      >
+                        <span className="tracking-wide">{item.name}</span>
+                        <ChevronDown
+                          className={`w-6 h-6 transition-transform duration-300 ${activeMobileDropdown === item.name ? "rotate-180 text-[#1987BF]" : ""}`}
+                        />
+                      </button>
+                      <div
+                        className={`overflow-hidden transition-all duration-400 ease-out ${activeMobileDropdown === item.name ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+                      >
+                        <div className="pl-4 space-y-4 pt-3">
+                          {item.items?.map((subItem) => (
+                            <a
+                              key={subItem.name}
+                              href={subItem.href}
+                              onClick={(e) => {
+                                e.preventDefault()
+                                handleNavigation(subItem.href)
+                              }}
+                              className="block py-3 px-3 text-lg text-slate-600 hover:text-[#1987BF] hover:bg-slate-50/50 transition-colors duration-200 cursor-pointer rounded-lg font-medium"
+                            >
+                              {subItem.name}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
                     <button
-                      onClick={() => setActiveDropdown(activeDropdown === item.name ? null : item.name)}
-                      className="flex items-center justify-between w-full text-left font-semibold text-xl text-gray-900 hover:text-[#1987BF] transition-colors duration-200 py-3"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        handleNavigation(item.href)
+                      }}
+                      className="flex items-center justify-between w-full text-left font-semibold text-xl text-slate-800 hover:text-[#1987BF] transition-colors duration-300 py-4 px-2 rounded-lg hover:bg-slate-50/50"
                     >
-                      {item.name}
-                      <ChevronDown
-                        className={`w-6 h-6 transition-transform duration-200 ${activeDropdown === item.name ? "rotate-180" : ""}`}
-                      />
+                      <span className="tracking-wide">{item.name}</span>
                     </button>
-                    <div
-                      className={`overflow-hidden transition-all duration-300 ease-out ${activeDropdown === item.name ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
-                    >
-                      <div className="pl-4 space-y-3 pt-3">
-                        {item.items?.map((subItem) => (
-                          <a
-                            key={subItem.name}
-                            href={subItem.href}
-                            onClick={(e) => {
-                              e.preventDefault()
-                              handleNavigation(subItem.href)
-                            }}
-                            className="block py-3 text-lg text-gray-600 hover:text-[#1987BF] transition-colors duration-200 cursor-pointer"
-                          >
-                            {subItem.name}
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault()
-                      handleNavigation(item.href)
-                    }}
-                    className="flex items-center justify-between w-full text-left font-semibold text-xl text-gray-900 hover:text-[#1987BF] transition-colors duration-200 py-3"
-                  >
-                    {item.name}
-                  </button>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              ))}
+            </div>
 
             {/* Mobile Actions */}
-            <div className="pt-6 border-t border-gray-100 space-y-4">
+            <div className="pt-8 border-t border-gray-200/60 space-y-5">
               <Button
                 variant="outline"
-                className="w-full justify-center bg-transparent border-gray-200 text-gray-700 hover:border-[#1987BF] hover:text-[#1987BF] hover:bg-[#1987BF]/5 text-lg py-6"
+                className="w-full justify-center bg-transparent border-2 border-slate-200 text-slate-700 hover:border-[#1987BF] hover:text-[#1987BF] hover:bg-[#1987BF]/5 text-lg py-4 rounded-xl font-semibold transition-all duration-300"
                 onClick={() => handleNavigation("/contact-us")}
               >
                 <Phone className="w-5 h-5 mr-3" />
@@ -518,7 +632,7 @@ useEffect(() => {
               </Button>
               {user ? (
                 <Button
-                  className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold text-lg py-4"
+                  className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold text-lg py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                   onClick={navigateToUserAccount}
                 >
                   <User className="w-5 h-5 mr-2" />
@@ -526,7 +640,7 @@ useEffect(() => {
                 </Button>
               ) : (
                 <Button
-                  className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold text-lg py-4"
+                  className="w-full bg-gray-900 hover:from-red-600 hover:to-red-700 text-white font-semibold text-lg py-4"
                   onClick={() => handleNavigation("/signup")}
                 >
                   Get Started
